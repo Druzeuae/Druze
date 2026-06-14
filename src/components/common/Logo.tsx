@@ -1,0 +1,54 @@
+import { cn } from "@/lib/utils";
+
+export function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn("h-full w-full", className)}
+    >
+      <defs>
+        <linearGradient id="druzeBrandGradient" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#4C2A85" />
+          <stop offset="50%" stopColor="#6C449E" />
+          <stop offset="100%" stopColor="#8B63CC" />
+        </linearGradient>
+        <linearGradient id="druzeGoldGradient" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#D4AF37" />
+          <stop offset="100%" stopColor="#F0D375" />
+        </linearGradient>
+      </defs>
+
+      <rect width="40" height="40" rx="9" fill="url(#druzeBrandGradient)" />
+
+      <path
+        d="M11 9.5C11 8.67157 11.6716 8 12.5 8H18.5C24.8513 8 30 13.1487 30 19.5V20.5C30 26.8513 24.8513 32 18.5 32H12.5C11.6716 32 11 31.3284 11 30.5V9.5Z"
+        fill="#FBF8FF"
+      />
+      <path
+        d="M16.5 12.5H18.5C22.6421 12.5 26 15.8579 26 20C26 24.1421 22.6421 27.5 18.5 27.5H16.5V12.5Z"
+        fill="url(#druzeBrandGradient)"
+      />
+
+      <path
+        d="M30.5 4.5L31.6 7.05L34.3 7.4L32.35 9.3L32.85 12L30.5 10.7L28.15 12L28.65 9.3L26.7 7.4L29.4 7.05L30.5 4.5Z"
+        fill="url(#druzeGoldGradient)"
+      />
+    </svg>
+  );
+}
+
+export function Logo({ className, size = "md" }: { className?: string; size?: "sm" | "md" | "lg" }) {
+  const dims = { sm: "h-7 w-7 text-sm", md: "h-9 w-9 text-base", lg: "h-14 w-14 text-2xl" }[size];
+  return (
+    <div className={cn("flex items-center gap-2 font-extrabold", className)}>
+      <div className={cn("shrink-0 overflow-hidden rounded-xl shadow-md", dims)}>
+        <LogoMark />
+      </div>
+      <span className="text-lg font-extrabold tracking-tight text-primary">
+        DRUZE <span className="text-gold-600">UAE</span>
+      </span>
+    </div>
+  );
+}

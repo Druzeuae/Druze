@@ -1,0 +1,95 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
+  theme: {
+    container: {
+      center: true,
+      padding: "1rem",
+      screens: { "2xl": "1280px" },
+    },
+    extend: {
+      fontFamily: {
+        sans: ["Inter", "ui-sans-serif", "system-ui"],
+        arabic: ["Cairo", "ui-sans-serif", "system-ui"],
+      },
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "#4C2A85",
+          50: "#F3EEFB",
+          100: "#E4D8F5",
+          200: "#C9B1EB",
+          300: "#AD8AE0",
+          400: "#8B63CC",
+          500: "#6C449E",
+          600: "#4C2A85",
+          700: "#3B2068",
+          800: "#2A164B",
+          900: "#190C2E",
+          foreground: "#FFFFFF",
+        },
+        gold: {
+          DEFAULT: "#D4AF37",
+          50: "#FBF6E7",
+          100: "#F7EDCB",
+          200: "#EFDB97",
+          300: "#E7C963",
+          400: "#DFBA45",
+          500: "#D4AF37",
+          600: "#B0902C",
+          700: "#8C7223",
+          800: "#68541A",
+          900: "#443611",
+          foreground: "#3B2068",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+      },
+      borderRadius: {
+        lg: "16px",
+        md: "12px",
+        sm: "8px",
+        xl: "20px",
+        "2xl": "24px",
+      },
+      keyframes: {
+        "fade-in": { "0%": { opacity: 0 }, "100%": { opacity: 1 } },
+        "slide-up": { "0%": { opacity: 0, transform: "translateY(12px)" }, "100%": { opacity: 1, transform: "translateY(0)" } },
+        "pop": { "0%": { transform: "scale(0.9)", opacity: 0 }, "100%": { transform: "scale(1)", opacity: 1 } },
+      },
+      animation: {
+        "fade-in": "fade-in 0.3s ease-out",
+        "slide-up": "slide-up 0.35s ease-out",
+        "pop": "pop 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [require("tailwindcss-animate")],
+};

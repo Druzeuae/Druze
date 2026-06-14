@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 265 45% 14%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 265 45% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 265 45% 14%;
+
+    --secondary: 270 60% 97%;
+    --secondary-foreground: 265 45% 20%;
+
+    --muted: 240 10% 96%;
+    --muted-foreground: 240 5% 45%;
+
+    --accent: 45 65% 95%;
+    --accent-foreground: 265 45% 20%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 12% 90%;
+    --input: 240 12% 90%;
+    --ring: 265 45% 40%;
+  }
+
+  .dark {
+    --background: 265 35% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 265 30% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 265 30% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --secondary: 265 25% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 265 20% 18%;
+    --muted-foreground: 240 10% 65%;
+
+    --accent: 265 25% 20%;
+    --accent-foreground: 45 65% 80%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 265 20% 22%;
+    --input: 265 20% 22%;
+    --ring: 45 65% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html[dir="rtl"] body {
+    font-family: "Cairo", "Inter", ui-sans-serif, system-ui;
+  }
+}
+
+@layer utilities {
+  .gradient-brand {
+    background: linear-gradient(135deg, #4C2A85 0%, #6C449E 50%, #8B63CC 100%);
+  }
+  .gradient-gold {
+    background: linear-gradient(135deg, #D4AF37 0%, #F0D375 100%);
+  }
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #4C2A85 0%, #8B63CC 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
