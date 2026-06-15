@@ -21,6 +21,16 @@ export type NotificationType =
   | "event_reminder";
 export type AccountStatus = "active" | "suspended" | "banned" | "deleted";
 export type VerificationLevel = "none" | "phone" | "photo" | "premium";
+export type ActivityCategory =
+  | "hiking"
+  | "football"
+  | "picnic"
+  | "hangout"
+  | "coffee"
+  | "beach"
+  | "game_night"
+  | "volunteering"
+  | "other";
 
 export interface Profile {
   id: string;
@@ -173,6 +183,7 @@ export interface EventRow {
   title_ar: string | null;
   description: string | null;
   description_ar: string | null;
+  category: ActivityCategory;
   city: City | null;
   location: string | null;
   cover_image_url: string | null;

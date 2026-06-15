@@ -78,6 +78,15 @@
   .gradient-gold {
     background: linear-gradient(135deg, #D4AF37 0%, #F0D375 100%);
   }
+  .gradient-social {
+    background: linear-gradient(135deg, #4C2A85 0%, #8B63CC 50%, #14B8A6 100%);
+  }
+  .gradient-teal {
+    background: linear-gradient(135deg, #0C766D 0%, #14B8A6 50%, #6EE7CB 100%);
+  }
+  .gradient-coral {
+    background: linear-gradient(135deg, #C0432A 0%, #FF7A59 50%, #FFC1AD 100%);
+  }
   .text-gradient-brand {
     background: linear-gradient(135deg, #4C2A85 0%, #8B63CC 100%);
     -webkit-background-clip: text;

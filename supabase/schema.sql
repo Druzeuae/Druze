@@ -33,6 +33,9 @@ create type notification_type as enum (
 );
 create type account_status as enum ('active', 'suspended', 'banned', 'deleted');
 create type verification_level as enum ('none', 'phone', 'photo', 'premium');
+create type activity_category as enum (
+  'hiking', 'football', 'picnic', 'hangout', 'coffee', 'beach', 'game_night', 'volunteering', 'other'
+);
 
 -- ----------------------------------------------------------------------------
 -- PROFILES
@@ -254,7 +257,7 @@ create table public.notifications (
 create index idx_notifications_user on public.notifications (user_id, created_at desc);
 
 -- ----------------------------------------------------------------------------
--- EVENTS (Phase 2 placeholder)
+-- EVENTS (a.k.a. "Activities")
 -- ----------------------------------------------------------------------------
 create table public.events (
   id uuid primary key default gen_random_uuid(),
@@ -262,6 +265,7 @@ create table public.events (
   title_ar text,
   description text,
   description_ar text,
+  category activity_category not null default 'other',
   city city_type,
   location text,
   cover_image_url text,
@@ -640,12 +644,24 @@ create policy "System can insert notifications"
   on public.notifications for insert
   with check (true);
 
--- EVENTS (read-only public placeholder)
+-- EVENTS / ACTIVITIES
 create policy "Anyone can view events"
   on public.events for select
   using (true);
 
-create policy "Admins manage events"
+create policy "Users create their own activities"
+  on public.events for insert
+  with check (created_by = auth.uid());
+
+create policy "Users update their own activities"
+  on public.events for update
+  using (created_by = auth.uid());
+
+create policy "Users delete their own activities"
+  on public.events for delete
+  using (created_by = auth.uid());
+
+create policy "Admins manage all activities"
   on public.events for all
   using (public.is_admin());
 

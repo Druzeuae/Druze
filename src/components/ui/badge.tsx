@@ -14,6 +14,8 @@ const badgeVariants = cva(
         success: "border-transparent bg-emerald-100 text-emerald-700",
         destructive: "border-transparent bg-destructive text-destructive-foreground",
         intent: "border-transparent bg-primary-50 text-primary-700",
+        teal: "border-transparent bg-teal-50 text-teal-700",
+        coral: "border-transparent bg-coral-50 text-coral-700",
       },
     },
     defaultVariants: { variant: "default" },

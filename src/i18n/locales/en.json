@@ -5,6 +5,7 @@
   },
   "nav": {
     "discover": "Discover",
+    "activities": "Activities",
     "matches": "Matches",
     "chat": "Chat",
     "notifications": "Notifications",
@@ -211,6 +212,44 @@
     "requestMessage": "Add a short introduction message",
     "unmatch": "Unmatch",
     "unmatchConfirm": "Are you sure you want to unmatch {{name}}? This will delete your conversation."
+  },
+  "activities": {
+    "title": "Activities",
+    "subtitle": "Plan and join community activities near you",
+    "createActivity": "Create Activity",
+    "allCategories": "All",
+    "category": "Category",
+    "categories": {
+      "hiking": "Hiking",
+      "football": "Football",
+      "picnic": "Picnic",
+      "hangout": "Hangout",
+      "coffee": "Coffee / Tea",
+      "beach": "Beach",
+      "game_night": "Game Night",
+      "volunteering": "Volunteering",
+      "other": "Other"
+    },
+    "noActivities": "No activities yet. Be the first to create one!",
+    "join": "Join",
+    "leave": "Leave",
+    "joined": "Joined",
+    "going": "{{count}} going",
+    "spotsLeft": "{{count}} spots left",
+    "full": "Full",
+    "location": "Location",
+    "date": "Date & time",
+    "capacity": "Capacity (optional)",
+    "description": "Description",
+    "createdBy": "Hosted by {{name}}",
+    "form": {
+      "title": "Activity title",
+      "titlePlaceholder": "e.g. Sunset beach picnic",
+      "descriptionPlaceholder": "What's the plan? Anything to bring?",
+      "locationPlaceholder": "e.g. Kite Beach, Dubai",
+      "submit": "Create Activity",
+      "success": "Activity created!"
+    }
   },
   "chat": {
     "title": "Chat",

@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState } from "
 
 import {
   CURRENT_USER_ID,
+  MOCK_ACTIVITIES,
   MOCK_APPRECIATIONS,
   MOCK_CONVERSATIONS,
   MOCK_MATCHES,
@@ -11,6 +12,7 @@ import {
 } from "@/data/mockData";
 
 import type {
+  AppActivity,
   AppAppreciation,
   AppBlock,
   AppConversation,
@@ -42,6 +44,7 @@ interface PersistedState {
   blocks: AppBlock[];
   reports: AppReport[];
   appreciationsSentToday: number;
+  activities: AppActivity[];
 }
 
 interface AppContextValue extends PersistedState {
@@ -71,6 +74,9 @@ interface AppContextValue extends PersistedState {
   adminSetAccountStatus: (userId: string, status: AppProfile["accountStatus"]) => void;
   adminVerify: (userId: string, field: "phoneVerified" | "photoVerified" | "premiumVerified") => void;
   adminResolveReport: (reportId: string, status: AppReport["status"]) => void;
+  createActivity: (activity: Omit<AppActivity, "id" | "createdBy" | "createdAt" | "participantIds">) => void;
+  joinActivity: (activityId: string) => void;
+  leaveActivity: (activityId: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
@@ -81,7 +87,9 @@ function loadInitialState(): PersistedState {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
-      return JSON.parse(raw) as PersistedState;
+      const parsed = JSON.parse(raw) as PersistedState;
+      if (!parsed.activities) parsed.activities = MOCK_ACTIVITIES;
+      return parsed;
     }
   } catch {
     // ignore corrupted state
@@ -102,6 +110,7 @@ function loadInitialState(): PersistedState {
     blocks: [],
     reports: [],
     appreciationsSentToday: 0,
+    activities: MOCK_ACTIVITIES,
   };
 }
 
@@ -459,6 +468,45 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
+  /* ---------------- ACTIVITIES ---------------- */
+
+  const createActivity = (
+    activity: Omit<AppActivity, "id" | "createdBy" | "createdAt" | "participantIds">
+  ) =>
+    setState((s) => ({
+      ...s,
+      activities: [
+        {
+          ...activity,
+          id: `act-${Date.now()}`,
+          createdBy: s.currentUser.id,
+          createdAt: new Date().toISOString(),
+          participantIds: [s.currentUser.id],
+        },
+        ...s.activities,
+      ],
+    }));
+
+  const joinActivity = (activityId: string) =>
+    setState((s) => ({
+      ...s,
+      activities: s.activities.map((a) =>
+        a.id === activityId && !a.participantIds.includes(s.currentUser.id)
+          ? { ...a, participantIds: [...a.participantIds, s.currentUser.id] }
+          : a
+      ),
+    }));
+
+  const leaveActivity = (activityId: string) =>
+    setState((s) => ({
+      ...s,
+      activities: s.activities.map((a) =>
+        a.id === activityId
+          ? { ...a, participantIds: a.participantIds.filter((id) => id !== s.currentUser.id) }
+          : a
+      ),
+    }));
+
   /* ---------------- VALUE ---------------- */
 
   const value = useMemo<AppContextValue>(
@@ -487,6 +535,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       adminSetAccountStatus,
       adminVerify,
       adminResolveReport,
+      createActivity,
+      joinActivity,
+      leaveActivity,
     }),
     [state]
   );

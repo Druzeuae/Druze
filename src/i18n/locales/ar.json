@@ -6,6 +6,7 @@
   "nav": {
     "discover": "استكشف",
     "matches": "التطابقات",
+    "activities": "الأنشطة",
     "chat": "المحادثات",
     "notifications": "الإشعارات",
     "profile": "الملف الشخصي",
@@ -211,6 +212,44 @@
     "requestMessage": "أضف رسالة تعريفية قصيرة",
     "unmatch": "إلغاء التطابق",
     "unmatchConfirm": "هل أنت متأكد من إلغاء التطابق مع {{name}}؟ سيتم حذف محادثتكما."
+  },
+  "activities": {
+    "title": "الأنشطة",
+    "subtitle": "خطط وانضم إلى أنشطة المجتمع القريبة منك",
+    "createActivity": "إنشاء نشاط",
+    "allCategories": "الكل",
+    "category": "الفئة",
+    "categories": {
+      "hiking": "تسلق الجبال",
+      "football": "كرة القدم",
+      "picnic": "نزهة",
+      "hangout": "تجمع",
+      "coffee": "قهوة / شاي",
+      "beach": "الشاطئ",
+      "game_night": "ليلة ألعاب",
+      "volunteering": "تطوع",
+      "other": "أخرى"
+    },
+    "noActivities": "لا توجد أنشطة حتى الآن. كن أول من ينشئ نشاطاً!",
+    "join": "انضمام",
+    "leave": "إلغاء الانضمام",
+    "joined": "منضم",
+    "going": "{{count}} مشارك",
+    "spotsLeft": "{{count}} مقاعد متبقية",
+    "full": "مكتمل",
+    "location": "الموقع",
+    "date": "التاريخ والوقت",
+    "capacity": "السعة (اختياري)",
+    "description": "الوصف",
+    "createdBy": "استضافة {{name}}",
+    "form": {
+      "title": "عنوان النشاط",
+      "titlePlaceholder": "مثال: نزهة شاطئية عند الغروب",
+      "descriptionPlaceholder": "ما هي الخطة؟ هل هناك شيء يجب إحضاره؟",
+      "locationPlaceholder": "مثال: شاطئ كايت بيتش، دبي",
+      "submit": "إنشاء النشاط",
+      "success": "تم إنشاء النشاط!"
+    }
   },
   "chat": {
     "title": "المحادثات",

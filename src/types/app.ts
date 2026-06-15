@@ -133,6 +133,34 @@ export interface AppBlock {
   createdAt: string;
 }
 
+export type ActivityCategory =
+  | "hiking"
+  | "football"
+  | "picnic"
+  | "hangout"
+  | "coffee"
+  | "beach"
+  | "game_night"
+  | "volunteering"
+  | "other";
+
+export interface AppActivity {
+  id: string;
+  title: string;
+  titleAr?: string;
+  description?: string;
+  descriptionAr?: string;
+  category: ActivityCategory;
+  city: City;
+  location: string;
+  startsAt: string;
+  endsAt?: string;
+  capacity?: number;
+  createdBy: string;
+  participantIds: string[];
+  createdAt: string;
+}
+
 export interface DiscoveryFilters {
   city: City | "all";
   intent: ConnectionIntent | "all";
