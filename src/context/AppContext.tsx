@@ -5,6 +5,7 @@ import {
   MOCK_ACTIVITIES,
   MOCK_APPRECIATIONS,
   MOCK_CONVERSATIONS,
+  MOCK_GAME_ROOMS,
   MOCK_MATCHES,
   MOCK_MESSAGES,
   MOCK_NOTIFICATIONS,
@@ -16,11 +17,13 @@ import type {
   AppAppreciation,
   AppBlock,
   AppConversation,
+  AppGameRoom,
   AppMatch,
   AppMessage,
   AppNotification,
   AppProfile,
   AppReport,
+  GameType,
 } from "@/types/app";
 
 import supabase from "@/lib/supabase"; // ✅ FIX 1: default import (no curly braces)
@@ -45,6 +48,7 @@ interface PersistedState {
   reports: AppReport[];
   appreciationsSentToday: number;
   activities: AppActivity[];
+  gameRooms: AppGameRoom[];
 }
 
 interface AppContextValue extends PersistedState {
@@ -77,6 +81,9 @@ interface AppContextValue extends PersistedState {
   createActivity: (activity: Omit<AppActivity, "id" | "createdBy" | "createdAt" | "participantIds">) => void;
   joinActivity: (activityId: string) => void;
   leaveActivity: (activityId: string) => void;
+  createGameRoom: (name: string, gameType: GameType) => void;
+  joinGameRoom: (roomId: string) => void;
+  leaveGameRoom: (roomId: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
@@ -89,6 +96,7 @@ function loadInitialState(): PersistedState {
     if (raw) {
       const parsed = JSON.parse(raw) as PersistedState;
       if (!parsed.activities) parsed.activities = MOCK_ACTIVITIES;
+      if (!parsed.gameRooms) parsed.gameRooms = MOCK_GAME_ROOMS;
       return parsed;
     }
   } catch {
@@ -111,6 +119,7 @@ function loadInitialState(): PersistedState {
     reports: [],
     appreciationsSentToday: 0,
     activities: MOCK_ACTIVITIES,
+    gameRooms: MOCK_GAME_ROOMS,
   };
 }
 
@@ -507,6 +516,44 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
+  /* ---------------- GAME ROOMS ---------------- */
+
+  const createGameRoom = (name: string, gameType: GameType) =>
+    setState((s) => ({
+      ...s,
+      gameRooms: [
+        {
+          id: `room-${Date.now()}`,
+          name: name.trim(),
+          gameType,
+          hostId: s.currentUser.id,
+          playerIds: [s.currentUser.id],
+          createdAt: new Date().toISOString(),
+        },
+        ...s.gameRooms,
+      ],
+    }));
+
+  const joinGameRoom = (roomId: string) =>
+    setState((s) => ({
+      ...s,
+      gameRooms: s.gameRooms.map((r) =>
+        r.id === roomId && !r.playerIds.includes(s.currentUser.id)
+          ? { ...r, playerIds: [...r.playerIds, s.currentUser.id] }
+          : r
+      ),
+    }));
+
+  const leaveGameRoom = (roomId: string) =>
+    setState((s) => ({
+      ...s,
+      gameRooms: s.gameRooms.map((r) =>
+        r.id === roomId
+          ? { ...r, playerIds: r.playerIds.filter((id) => id !== s.currentUser.id) }
+          : r
+      ),
+    }));
+
   /* ---------------- VALUE ---------------- */
 
   const value = useMemo<AppContextValue>(
@@ -538,6 +585,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       createActivity,
       joinActivity,
       leaveActivity,
+      createGameRoom,
+      joinGameRoom,
+      leaveGameRoom,
     }),
     [state]
   );

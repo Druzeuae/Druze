@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Compass, CalendarDays, Heart, MessageCircle, Bell, User, Shield, Moon, Sun } from "lucide-react";
+import { Compass, CalendarDays, Gamepad2, Heart, MessageCircle, Bell, User, Shield, Moon, Sun } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -13,6 +13,7 @@ import { cn, initials } from "@/lib/utils";
 const NAV_ITEMS = [
   { to: "/discover", icon: Compass, labelKey: "nav.discover" },
   { to: "/activities", icon: CalendarDays, labelKey: "nav.activities" },
+  { to: "/games", icon: Gamepad2, labelKey: "nav.games" },
   { to: "/matches", icon: Heart, labelKey: "nav.matches" },
   { to: "/chat", icon: MessageCircle, labelKey: "nav.chat" },
   { to: "/notifications", icon: Bell, labelKey: "nav.notifications" },

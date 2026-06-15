@@ -6,6 +6,7 @@
   "nav": {
     "discover": "Discover",
     "activities": "Activities",
+    "games": "Games",
     "matches": "Matches",
     "chat": "Chat",
     "notifications": "Notifications",
@@ -249,6 +250,63 @@
       "locationPlaceholder": "e.g. Kite Beach, Dubai",
       "submit": "Create Activity",
       "success": "Activity created!"
+    }
+  },
+  "games": {
+    "title": "Games Room",
+    "subtitle": "Join a room and play together — or start your own",
+    "createRoom": "Create Room",
+    "quickPlay": "Quick play",
+    "openRooms": "Open rooms",
+    "noRooms": "No rooms yet. Create one and invite the community!",
+    "joinPlay": "Join & Play",
+    "enterRoom": "Enter Room",
+    "leave": "Leave",
+    "playersCount": "{{count}} playing",
+    "hostedBy": "Hosted by {{name}}",
+    "backToLobby": "Back to lobby",
+    "playAgain": "Play again",
+    "passPhoneHint": "Tip: gather around one screen and pass the phone — or everyone open their own room.",
+    "roomName": "Room name",
+    "roomNamePlaceholder": "e.g. Friday Night Fun",
+    "chooseGame": "Choose a game",
+    "types": {
+      "trivia": { "name": "Trivia Challenge", "desc": "Test your knowledge across fun categories" },
+      "would_you_rather": { "name": "Would You Rather", "desc": "Pick a side and see how the group splits" },
+      "never_have_i_ever": { "name": "Never Have I Ever", "desc": "Reveal who's done what — great icebreaker" },
+      "two_truths": { "name": "Two Truths & a Lie", "desc": "Spot the lie among three statements" }
+    },
+    "trivia": {
+      "question": "Question {{current}} of {{total}}",
+      "score": "Score: {{score}}",
+      "seeResults": "See results",
+      "finished": "Round complete!",
+      "scorePct": "You scored {{pct}}%",
+      "playAgain": "Play again"
+    },
+    "wouldYouRather": {
+      "prompt": "Would you rather...",
+      "or": "OR",
+      "next": "Next question"
+    },
+    "neverHaveIEver": {
+      "title": "Never have I ever...",
+      "iHave": "I have",
+      "iNever": "I never"
+    },
+    "twoTruths": {
+      "writeHint": "Write 3 statements about yourself — two true, one false. Tap to mark which one is the lie, then pass the phone!",
+      "statement": "Statement {{n}}",
+      "markLie": "Mark as lie",
+      "thisIsLie": "This is the lie",
+      "placeholder": "Type a statement...",
+      "startGuessing": "Start guessing",
+      "guessPrompt": "Which one is the lie?",
+      "correct": "🎉 Correct! You spotted the lie",
+      "wrong": "😅 Nope — that one was true!",
+      "lie": "Lie",
+      "truth": "Truth",
+      "newRound": "New round"
     }
   },
   "chat": {

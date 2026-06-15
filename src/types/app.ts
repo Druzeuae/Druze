@@ -161,6 +161,18 @@ export interface AppActivity {
   createdAt: string;
 }
 
+export type GameType = "trivia" | "would_you_rather" | "never_have_i_ever" | "two_truths";
+
+export interface AppGameRoom {
+  id: string;
+  name: string;
+  nameAr?: string;
+  gameType: GameType;
+  hostId: string;
+  playerIds: string[];
+  createdAt: string;
+}
+
 export interface DiscoveryFilters {
   city: City | "all";
   intent: ConnectionIntent | "all";

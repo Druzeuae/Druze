@@ -6,6 +6,7 @@ import type {
   AppMessage,
   AppNotification,
   AppActivity,
+  AppGameRoom,
 } from "@/types/app";
 
 const daysFromNow = (days: number, hour = 17) => {
@@ -457,5 +458,35 @@ export const MOCK_ACTIVITIES: AppActivity[] = [
     createdBy: "u-6",
     participantIds: ["u-6", "u-3", "u-4", "u-7"],
     createdAt: "2026-06-14T10:00:00Z",
+  },
+];
+
+export const MOCK_GAME_ROOMS: AppGameRoom[] = [
+  {
+    id: "room-1",
+    name: "Friday Night Trivia",
+    nameAr: "تحدي معلومات ليلة الجمعة",
+    gameType: "trivia",
+    hostId: "u-2",
+    playerIds: ["u-2", "u-4", "u-6"],
+    createdAt: "2026-06-14T19:00:00Z",
+  },
+  {
+    id: "room-2",
+    name: "Would You Rather — Community Edition",
+    nameAr: "ماذا تفضل — نسخة المجتمع",
+    gameType: "would_you_rather",
+    hostId: "u-5",
+    playerIds: ["u-5", "u-7"],
+    createdAt: "2026-06-14T20:00:00Z",
+  },
+  {
+    id: "room-3",
+    name: "Get to Know Us 🎉",
+    nameAr: "تعرّف علينا 🎉",
+    gameType: "never_have_i_ever",
+    hostId: "u-3",
+    playerIds: ["u-3", "u-6", "u-4", "u-7"],
+    createdAt: "2026-06-15T18:00:00Z",
   },
 ];

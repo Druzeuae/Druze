@@ -9,6 +9,7 @@ import AuthPage from "@/pages/AuthPage";
 import OnboardingPage from "@/pages/OnboardingPage";
 import DiscoverPage from "@/pages/DiscoverPage";
 import ActivitiesPage from "@/pages/ActivitiesPage";
+import GamesPage from "@/pages/GamesPage";
 import MatchesPage from "@/pages/MatchesPage";
 import ChatPage from "@/pages/ChatPage";
 import NotificationsPage from "@/pages/NotificationsPage";
@@ -74,6 +75,7 @@ function AppRoutes() {
       >
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
+        <Route path="/games" element={<GamesPage />} />
         <Route path="/matches" element={<MatchesPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/:conversationId" element={<ChatPage />} />
