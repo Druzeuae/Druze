@@ -97,10 +97,6 @@ export default function OnboardingPage() {
                 <p className="text-muted-foreground">{t("onboarding.step1.subtitle")}</p>
                 <div className="space-y-3 pt-2">
                   <div className="space-y-1.5">
-                    <Label>{t("auth.email")}</Label>
-                    <Input value={currentUser.email} disabled />
-                  </div>
-                  <div className="space-y-1.5">
                     <Label>{t("auth.phone")}</Label>
                     <Input placeholder="+971 50 123 4567" />
                   </div>
