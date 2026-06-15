@@ -6,6 +6,7 @@
   "nav": {
     "discover": "استكشف",
     "matches": "التطابقات",
+    "community": "المجتمع",
     "activities": "الأنشطة",
     "games": "الألعاب",
     "chat": "المحادثات",
@@ -213,6 +214,107 @@
     "requestMessage": "أضف رسالة تعريفية قصيرة",
     "unmatch": "إلغاء التطابق",
     "unmatchConfirm": "هل أنت متأكد من إلغاء التطابق مع {{name}}؟ سيتم حذف محادثتكما."
+  },
+  "community": {
+    "title": "المجتمع",
+    "subtitle": "صف الإخوان — وطننا الرقمي للتكافل والدعم المتبادل",
+    "you": "أنت",
+    "backToHub": "العودة إلى المجتمع",
+    "topContributors": "صف الإخوان — أكثر المساهمين عطاءً",
+    "standing": {
+      "title": "مكانتك في المجتمع",
+      "points": "نقاط المساهمة",
+      "toNext": "{{points}} نقطة للمستوى التالي",
+      "maxLevel": "أعلى مكانة — شكراً لكل ما تقدمه 🤍",
+      "earnTitle": "اكسب مكانتك بالعطاء",
+      "levels": {
+        "newcomer": "وافد جديد",
+        "neighbor": "جار",
+        "pillar": "ركيزة",
+        "guardian": "حارس"
+      },
+      "actions": {
+        "support": "ادعم عضواً",
+        "mentorship": "كن مرشداً",
+        "hosting": "استضف فعالية",
+        "knowledge": "شارك المعرفة",
+        "volunteering": "تطوّع",
+        "presence": "كن حاضراً للآخرين"
+      }
+    },
+    "sections": {
+      "majlis": {
+        "name": "المجلس",
+        "desc": "نقاشات وحكايات ونصائح",
+        "long": "نجتمع ونتشارك الحكايات ونسأل ونتعلم معاً — المجلس الرقمي."
+      },
+      "moments": {
+        "name": "لحظات المجتمع",
+        "desc": "نحتفل وندعم بعضنا",
+        "long": "احتفالات وإنجازات وتعازٍ — نكون حاضرين لبعضنا البعض."
+      },
+      "villages": {
+        "name": "جذور القرى",
+        "desc": "اعثر على أهلك حسب البلدة",
+        "long": "تواصل مع الأعضاء الذين يشاركونك قريتك وجذورك."
+      },
+      "matte": {
+        "name": "دوائر المتة",
+        "desc": "نجتمع حول المتة",
+        "long": "دوائر صغيرة تجتمع حول المتة للاحتساء والحديث والتآلف — حضورياً أو أونلاين."
+      }
+    }
+  },
+  "majlis": {
+    "newTopic": "موضوع جديد",
+    "topicTitle": "العنوان",
+    "topicTitlePlaceholder": "ماذا تريد أن تشارك أو تسأل؟",
+    "topicBody": "رسالتك",
+    "topicBodyPlaceholder": "اكتب أفكارك...",
+    "post": "نشر",
+    "replyPlaceholder": "اكتب رداً...",
+    "categories": {
+      "discussion": "نقاش",
+      "story": "حكاية",
+      "question": "سؤال",
+      "heritage": "تراث",
+      "advice": "نصيحة"
+    }
+  },
+  "moments": {
+    "share": "شارك لحظة",
+    "type": "النوع",
+    "titleLabel": "العنوان",
+    "titlePlaceholder": "مثال: خطبنا! 💍",
+    "message": "الرسالة",
+    "messagePlaceholder": "شارك اللحظة مع المجتمع...",
+    "post": "نشر",
+    "standingWith": "{{count}} يقفون معهم",
+    "celebrate": "احتفل",
+    "standWith": "قف معهم",
+    "supporting": "تدعم",
+    "types": {
+      "celebration": "احتفال",
+      "milestone": "إنجاز",
+      "condolence": "تعزية",
+      "announcement": "إعلان"
+    }
+  },
+  "villages": {
+    "members": "{{count}} عضو",
+    "claimRoots": "هذه جذوري",
+    "yourRoots": "جذورك",
+    "leave": "مغادرة"
+  },
+  "matte": {
+    "members": "{{count}} عضو",
+    "join": "انضم للدائرة",
+    "leave": "مغادرة",
+    "hostedBy": "استضافة {{name}}",
+    "mode": {
+      "in_person": "حضورياً",
+      "online": "أونلاين"
+    }
   },
   "activities": {
     "title": "الأنشطة",

@@ -10,6 +10,11 @@ import OnboardingPage from "@/pages/OnboardingPage";
 import DiscoverPage from "@/pages/DiscoverPage";
 import ActivitiesPage from "@/pages/ActivitiesPage";
 import GamesPage from "@/pages/GamesPage";
+import CommunityHubPage from "@/pages/CommunityHubPage";
+import MajlisPage from "@/pages/MajlisPage";
+import MomentsPage from "@/pages/MomentsPage";
+import VillagesPage from "@/pages/VillagesPage";
+import MatteCirclesPage from "@/pages/MatteCirclesPage";
 import MatchesPage from "@/pages/MatchesPage";
 import ChatPage from "@/pages/ChatPage";
 import NotificationsPage from "@/pages/NotificationsPage";
@@ -76,6 +81,11 @@ function AppRoutes() {
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/community" element={<CommunityHubPage />} />
+        <Route path="/community/majlis" element={<MajlisPage />} />
+        <Route path="/community/moments" element={<MomentsPage />} />
+        <Route path="/community/villages" element={<VillagesPage />} />
+        <Route path="/community/matte" element={<MatteCirclesPage />} />
         <Route path="/matches" element={<MatchesPage />} />
         <Route path="/chat" element={<ChatPage />} />
         <Route path="/chat/:conversationId" element={<ChatPage />} />

@@ -52,6 +52,11 @@ export interface AppProfile {
   createdAt: string;
   lastActiveAt: string;
   onlineStatus?: "online" | "offline";
+
+  /** Saf Al-Ikhwan reputation — total contribution points (optional; defaults derived). */
+  contributionPoints?: number;
+  /** Ancestral village / hometown. */
+  village?: string;
 }
 
 export interface AppAppreciation {
@@ -159,6 +164,74 @@ export interface AppActivity {
   createdBy: string;
   participantIds: string[];
   createdAt: string;
+}
+
+/* --------------------------- Community ecosystem --------------------------- */
+
+export type MajlisCategory = "discussion" | "story" | "question" | "heritage" | "advice";
+
+export interface MajlisReply {
+  id: string;
+  authorId: string;
+  body: string;
+  createdAt: string;
+}
+
+export interface MajlisTopic {
+  id: string;
+  authorId: string;
+  category: MajlisCategory;
+  title: string;
+  titleAr?: string;
+  body: string;
+  bodyAr?: string;
+  likeIds: string[];
+  replies: MajlisReply[];
+  createdAt: string;
+}
+
+export type MomentType = "celebration" | "milestone" | "condolence" | "announcement";
+
+export interface CommunityMoment {
+  id: string;
+  authorId: string;
+  type: MomentType;
+  title: string;
+  titleAr?: string;
+  body: string;
+  bodyAr?: string;
+  /** member ids who offered support / stood with them. */
+  supportIds: string[];
+  createdAt: string;
+}
+
+export interface Village {
+  id: string;
+  name: string;
+  nameAr: string;
+  region: string;
+  regionAr: string;
+  country: string;
+  countryAr: string;
+  blurb: string;
+  blurbAr: string;
+  memberIds: string[];
+}
+
+export interface MatteCircle {
+  id: string;
+  name: string;
+  nameAr?: string;
+  hostId: string;
+  /** e.g. "Every Friday, 6pm" */
+  schedule: string;
+  scheduleAr?: string;
+  mode: "in_person" | "online";
+  location: string;
+  locationAr?: string;
+  blurb: string;
+  blurbAr?: string;
+  memberIds: string[];
 }
 
 export type GameType = "trivia" | "would_you_rather" | "never_have_i_ever" | "two_truths";

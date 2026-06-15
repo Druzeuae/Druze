@@ -1,11 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { Briefcase, Globe2, MapPin, PlayCircle } from "lucide-react";
+import { Briefcase, Globe2, Home, MapPin, PlayCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IntentBadges, VerificationBadges } from "@/components/common/IntentBadges";
 import { TrustScoreBadge } from "@/components/common/TrustScoreBadge";
+import { StandingBadge } from "@/components/community/StandingBadge";
 import { INTERESTS } from "@/data/interests";
+import { VILLAGES } from "@/data/communityData";
 import { calculateAge } from "@/lib/utils";
+import { contributionOf } from "@/lib/reputation";
 import { cityLabel, lifestyleLabel, nationalityLabel, observanceLabel } from "@/lib/profileLabels";
 import type { AppProfile } from "@/types/app";
 
@@ -13,6 +16,7 @@ export function ProfileView({ profile, children }: { profile: AppProfile; childr
   const { t, i18n } = useTranslation();
   const isAr = i18n.language === "ar";
   const age = calculateAge(profile.dateOfBirth);
+  const village = profile.village ? VILLAGES.find((v) => v.id === profile.village) : undefined;
 
   return (
     <div className="space-y-5">
@@ -40,11 +44,17 @@ export function ProfileView({ profile, children }: { profile: AppProfile; childr
                 {profile.displayName}, {age}
               </h1>
               <TrustScoreBadge score={profile.trustScore} size="sm" />
+              <StandingBadge points={contributionOf(profile)} />
             </div>
             <div className="mt-1 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
               <span className="flex items-center gap-1">
                 <MapPin className="h-4 w-4" /> {cityLabel(t, profile.city)}
               </span>
+              {village && (
+                <span className="flex items-center gap-1">
+                  <Home className="h-4 w-4" /> {i18n.language === "ar" ? village.nameAr : village.name}
+                </span>
+              )}
               <span className="flex items-center gap-1">
                 <Briefcase className="h-4 w-4" /> {profile.occupation}
               </span>

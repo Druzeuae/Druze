@@ -11,6 +11,14 @@ import {
   MOCK_NOTIFICATIONS,
   MOCK_PROFILES,
 } from "@/data/mockData";
+import {
+  COMMUNITY_MOMENTS,
+  MAJLIS_TOPICS,
+  MATTE_CIRCLES,
+  MEMBER_POINTS,
+  MEMBER_VILLAGE,
+  VILLAGES,
+} from "@/data/communityData";
 
 import type {
   AppActivity,
@@ -23,8 +31,23 @@ import type {
   AppNotification,
   AppProfile,
   AppReport,
+  CommunityMoment,
   GameType,
+  MajlisCategory,
+  MajlisTopic,
+  MatteCircle,
+  MomentType,
+  Village,
 } from "@/types/app";
+
+/** Attach showcase reputation + hometown to a profile if not already set. */
+function enrichProfile(p: AppProfile): AppProfile {
+  return {
+    ...p,
+    contributionPoints: p.contributionPoints ?? MEMBER_POINTS[p.id],
+    village: p.village ?? MEMBER_VILLAGE[p.id],
+  };
+}
 
 import supabase from "@/lib/supabase"; // ✅ FIX 1: default import (no curly braces)
 
@@ -49,6 +72,10 @@ interface PersistedState {
   appreciationsSentToday: number;
   activities: AppActivity[];
   gameRooms: AppGameRoom[];
+  majlisTopics: MajlisTopic[];
+  communityMoments: CommunityMoment[];
+  matteCircles: MatteCircle[];
+  villages: Village[];
 }
 
 interface AppContextValue extends PersistedState {
@@ -84,6 +111,15 @@ interface AppContextValue extends PersistedState {
   createGameRoom: (name: string, gameType: GameType) => void;
   joinGameRoom: (roomId: string) => void;
   leaveGameRoom: (roomId: string) => void;
+  postMajlisTopic: (input: { title: string; body: string; category: MajlisCategory }) => void;
+  replyToMajlis: (topicId: string, body: string) => void;
+  toggleMajlisLike: (topicId: string) => void;
+  postMoment: (input: { title: string; body: string; type: MomentType }) => void;
+  toggleMomentSupport: (momentId: string) => void;
+  joinVillage: (villageId: string) => void;
+  leaveVillage: (villageId: string) => void;
+  joinMatteCircle: (circleId: string) => void;
+  leaveMatteCircle: (circleId: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
@@ -97,18 +133,26 @@ function loadInitialState(): PersistedState {
       const parsed = JSON.parse(raw) as PersistedState;
       if (!parsed.activities) parsed.activities = MOCK_ACTIVITIES;
       if (!parsed.gameRooms) parsed.gameRooms = MOCK_GAME_ROOMS;
+      if (!parsed.majlisTopics) parsed.majlisTopics = MAJLIS_TOPICS;
+      if (!parsed.communityMoments) parsed.communityMoments = COMMUNITY_MOMENTS;
+      if (!parsed.matteCircles) parsed.matteCircles = MATTE_CIRCLES;
+      if (!parsed.villages) parsed.villages = VILLAGES;
+      if (parsed.currentUser && parsed.currentUser.contributionPoints === undefined) {
+        parsed.currentUser = enrichProfile(parsed.currentUser);
+      }
       return parsed;
     }
   } catch {
     // ignore corrupted state
   }
-  const currentUser = MOCK_PROFILES.find((p) => p.id === CURRENT_USER_ID)!;
+  const enrichedProfiles = MOCK_PROFILES.map(enrichProfile);
+  const currentUser = enrichedProfiles.find((p) => p.id === CURRENT_USER_ID)!;
   return {
     isAuthenticated: false,
     onboardingStep: 1,
     onboardingCompleted: false,
     currentUser,
-    profiles: MOCK_PROFILES,
+    profiles: enrichedProfiles,
     appreciations: MOCK_APPRECIATIONS,
     matches: MOCK_MATCHES,
     conversations: MOCK_CONVERSATIONS,
@@ -120,6 +164,10 @@ function loadInitialState(): PersistedState {
     appreciationsSentToday: 0,
     activities: MOCK_ACTIVITIES,
     gameRooms: MOCK_GAME_ROOMS,
+    majlisTopics: MAJLIS_TOPICS,
+    communityMoments: COMMUNITY_MOMENTS,
+    matteCircles: MATTE_CIRCLES,
+    villages: VILLAGES,
   };
 }
 
@@ -554,6 +602,156 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
+  /* ---------------- COMMUNITY ---------------- */
+
+  // Reward meaningful contribution (Saf Al-Ikhwan reputation).
+  const award = (s: PersistedState, points: number): PersistedState => {
+    const updated = {
+      ...s.currentUser,
+      contributionPoints: (s.currentUser.contributionPoints ?? 0) + points,
+    };
+    return {
+      ...s,
+      currentUser: updated,
+      profiles: s.profiles.map((p) => (p.id === updated.id ? updated : p)),
+    };
+  };
+
+  const postMajlisTopic = (input: { title: string; body: string; category: MajlisCategory }) =>
+    setState((s) =>
+      award(
+        {
+          ...s,
+          majlisTopics: [
+            {
+              id: `mj-${Date.now()}`,
+              authorId: s.currentUser.id,
+              category: input.category,
+              title: input.title.trim(),
+              body: input.body.trim(),
+              likeIds: [],
+              replies: [],
+              createdAt: new Date().toISOString(),
+            },
+            ...s.majlisTopics,
+          ],
+        },
+        15
+      )
+    );
+
+  const replyToMajlis = (topicId: string, body: string) =>
+    setState((s) =>
+      award(
+        {
+          ...s,
+          majlisTopics: s.majlisTopics.map((t) =>
+            t.id === topicId
+              ? {
+                  ...t,
+                  replies: [
+                    ...t.replies,
+                    { id: `mr-${Date.now()}`, authorId: s.currentUser.id, body: body.trim(), createdAt: new Date().toISOString() },
+                  ],
+                }
+              : t
+          ),
+        },
+        8
+      )
+    );
+
+  const toggleMajlisLike = (topicId: string) =>
+    setState((s) => ({
+      ...s,
+      majlisTopics: s.majlisTopics.map((t) =>
+        t.id === topicId
+          ? {
+              ...t,
+              likeIds: t.likeIds.includes(s.currentUser.id)
+                ? t.likeIds.filter((id) => id !== s.currentUser.id)
+                : [...t.likeIds, s.currentUser.id],
+            }
+          : t
+      ),
+    }));
+
+  const postMoment = (input: { title: string; body: string; type: MomentType }) =>
+    setState((s) => ({
+      ...s,
+      communityMoments: [
+        {
+          id: `mo-${Date.now()}`,
+          authorId: s.currentUser.id,
+          type: input.type,
+          title: input.title.trim(),
+          body: input.body.trim(),
+          supportIds: [],
+          createdAt: new Date().toISOString(),
+        },
+        ...s.communityMoments,
+      ],
+    }));
+
+  const toggleMomentSupport = (momentId: string) =>
+    setState((s) => {
+      const moment = s.communityMoments.find((m) => m.id === momentId);
+      const alreadySupporting = moment?.supportIds.includes(s.currentUser.id);
+      const next = {
+        ...s,
+        communityMoments: s.communityMoments.map((m) =>
+          m.id === momentId
+            ? {
+                ...m,
+                supportIds: alreadySupporting
+                  ? m.supportIds.filter((id) => id !== s.currentUser.id)
+                  : [...m.supportIds, s.currentUser.id],
+              }
+            : m
+        ),
+      };
+      // Showing up for someone earns presence points (only when adding support).
+      return alreadySupporting ? next : award(next, 8);
+    });
+
+  const joinVillage = (villageId: string) =>
+    setState((s) => ({
+      ...s,
+      villages: s.villages.map((v) =>
+        v.id === villageId && !v.memberIds.includes(s.currentUser.id)
+          ? { ...v, memberIds: [...v.memberIds, s.currentUser.id] }
+          : v
+      ),
+      currentUser: { ...s.currentUser, village: villageId },
+      profiles: s.profiles.map((p) => (p.id === s.currentUser.id ? { ...p, village: villageId } : p)),
+    }));
+
+  const leaveVillage = (villageId: string) =>
+    setState((s) => ({
+      ...s,
+      villages: s.villages.map((v) =>
+        v.id === villageId ? { ...v, memberIds: v.memberIds.filter((id) => id !== s.currentUser.id) } : v
+      ),
+    }));
+
+  const joinMatteCircle = (circleId: string) =>
+    setState((s) => ({
+      ...s,
+      matteCircles: s.matteCircles.map((c) =>
+        c.id === circleId && !c.memberIds.includes(s.currentUser.id)
+          ? { ...c, memberIds: [...c.memberIds, s.currentUser.id] }
+          : c
+      ),
+    }));
+
+  const leaveMatteCircle = (circleId: string) =>
+    setState((s) => ({
+      ...s,
+      matteCircles: s.matteCircles.map((c) =>
+        c.id === circleId ? { ...c, memberIds: c.memberIds.filter((id) => id !== s.currentUser.id) } : c
+      ),
+    }));
+
   /* ---------------- VALUE ---------------- */
 
   const value = useMemo<AppContextValue>(
@@ -588,6 +786,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       createGameRoom,
       joinGameRoom,
       leaveGameRoom,
+      postMajlisTopic,
+      replyToMajlis,
+      toggleMajlisLike,
+      postMoment,
+      toggleMomentSupport,
+      joinVillage,
+      leaveVillage,
+      joinMatteCircle,
+      leaveMatteCircle,
     }),
     [state]
   );

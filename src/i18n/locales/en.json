@@ -5,6 +5,7 @@
   },
   "nav": {
     "discover": "Discover",
+    "community": "Community",
     "activities": "Activities",
     "games": "Games",
     "matches": "Matches",
@@ -213,6 +214,107 @@
     "requestMessage": "Add a short introduction message",
     "unmatch": "Unmatch",
     "unmatchConfirm": "Are you sure you want to unmatch {{name}}? This will delete your conversation."
+  },
+  "community": {
+    "title": "Community",
+    "subtitle": "Saf Al-Ikhwan — our digital homeland of mutual support",
+    "you": "you",
+    "backToHub": "Back to Community",
+    "topContributors": "Saf Al-Ikhwan — top contributors",
+    "standing": {
+      "title": "Your community standing",
+      "points": "contribution points",
+      "toNext": "{{points}} points to the next level",
+      "maxLevel": "Highest standing — thank you for all you give 🤍",
+      "earnTitle": "Earn standing by giving back",
+      "levels": {
+        "newcomer": "Newcomer",
+        "neighbor": "Neighbor",
+        "pillar": "Pillar",
+        "guardian": "Guardian"
+      },
+      "actions": {
+        "support": "Support a member",
+        "mentorship": "Mentor someone",
+        "hosting": "Host an event",
+        "knowledge": "Share knowledge",
+        "volunteering": "Volunteer",
+        "presence": "Show up for others"
+      }
+    },
+    "sections": {
+      "majlis": {
+        "name": "Majlis",
+        "desc": "Discussions, stories & advice",
+        "long": "Gather, share stories, ask, and learn together — the digital majlis."
+      },
+      "moments": {
+        "name": "Community Moments",
+        "desc": "Celebrate & support one another",
+        "long": "Celebrations, milestones and condolences — we show up for each other."
+      },
+      "villages": {
+        "name": "Village Roots",
+        "desc": "Find your people by hometown",
+        "long": "Connect with members who share your ancestral village and roots."
+      },
+      "matte": {
+        "name": "Matte Circles",
+        "desc": "Gather over matte (متة)",
+        "long": "Small circles that meet over matte to sip, talk, and bond — in person or online."
+      }
+    }
+  },
+  "majlis": {
+    "newTopic": "New Topic",
+    "topicTitle": "Title",
+    "topicTitlePlaceholder": "What would you like to share or ask?",
+    "topicBody": "Your message",
+    "topicBodyPlaceholder": "Write your thoughts...",
+    "post": "Post",
+    "replyPlaceholder": "Write a reply...",
+    "categories": {
+      "discussion": "Discussion",
+      "story": "Story",
+      "question": "Question",
+      "heritage": "Heritage",
+      "advice": "Advice"
+    }
+  },
+  "moments": {
+    "share": "Share a Moment",
+    "type": "Type",
+    "titleLabel": "Title",
+    "titlePlaceholder": "e.g. We got engaged! 💍",
+    "message": "Message",
+    "messagePlaceholder": "Share the moment with the community...",
+    "post": "Share",
+    "standingWith": "{{count}} standing with them",
+    "celebrate": "Celebrate",
+    "standWith": "Stand with them",
+    "supporting": "Supporting",
+    "types": {
+      "celebration": "Celebration",
+      "milestone": "Milestone",
+      "condolence": "Condolence",
+      "announcement": "Announcement"
+    }
+  },
+  "villages": {
+    "members": "{{count}} members",
+    "claimRoots": "Claim roots",
+    "yourRoots": "Your roots",
+    "leave": "Leave"
+  },
+  "matte": {
+    "members": "{{count}} members",
+    "join": "Join circle",
+    "leave": "Leave",
+    "hostedBy": "Hosted by {{name}}",
+    "mode": {
+      "in_person": "In person",
+      "online": "Online"
+    }
   },
   "activities": {
     "title": "Activities",
