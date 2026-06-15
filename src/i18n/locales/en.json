@@ -15,7 +15,18 @@
     "profile": "Profile",
     "settings": "Settings",
     "admin": "Admin",
-    "logout": "Log out"
+    "logout": "Log out",
+    "previews": {
+      "discover": "Meet new people across the community.",
+      "community": "Your majlis, villages, moments & matte circles.",
+      "activities": "Hikes, football, picnics & meetups near you.",
+      "games": "Play trivia & party games together, live.",
+      "events": "Eid, Nabi Shu'ayb & community gatherings.",
+      "matches": "People you've connected with.",
+      "chat": "Your private conversations.",
+      "notifications": "Stay up to date with everything.",
+      "profile": "Your profile & community standing."
+    }
   },
   "common": {
     "save": "Save",
