@@ -4,31 +4,31 @@
 
 @layer base {
   :root {
-    /* Luxury palette — warm pearl/ivory base, royal aubergine ink, champagne gold accents */
-    --background: 40 38% 96%;
-    --foreground: 265 45% 13%;
+    /* Luxury palette — deep warm mocha/taupe canvas, royal-aubergine ink, champagne gold */
+    --background: 30 14% 82%;
+    --foreground: 270 50% 10%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 265 45% 13%;
+    --card: 36 30% 97%;
+    --card-foreground: 270 50% 10%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 265 45% 13%;
+    --popover: 36 30% 97%;
+    --popover-foreground: 270 50% 10%;
 
-    --secondary: 42 48% 92%;
-    --secondary-foreground: 265 40% 22%;
+    --secondary: 34 20% 79%;
+    --secondary-foreground: 270 40% 18%;
 
-    --muted: 38 26% 90%;
-    --muted-foreground: 40 8% 42%;
+    --muted: 30 13% 76%;
+    --muted-foreground: 30 8% 36%;
 
-    --accent: 44 62% 89%;
-    --accent-foreground: 265 42% 22%;
+    --accent: 42 42% 78%;
+    --accent-foreground: 270 42% 18%;
 
-    --destructive: 0 72% 51%;
+    --destructive: 0 70% 46%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 38 26% 86%;
-    --input: 38 26% 86%;
-    --ring: 42 74% 48%;
+    --border: 30 14% 71%;
+    --input: 30 14% 71%;
+    --ring: 42 80% 42%;
   }
 
   .dark {
@@ -66,10 +66,10 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
-    /* Subtle luxury backdrop: faint champagne glow on a pearl base */
+    /* Luxury backdrop: warm champagne + aubergine glow on a deep mocha base */
     background-image:
-      radial-gradient(1200px 600px at 100% -10%, hsl(42 60% 88% / 0.55), transparent 60%),
-      radial-gradient(900px 500px at -10% 0%, hsl(265 40% 90% / 0.45), transparent 55%);
+      radial-gradient(1100px 600px at 100% -10%, hsl(42 55% 70% / 0.5), transparent 60%),
+      radial-gradient(900px 520px at -10% 0%, hsl(270 40% 60% / 0.32), transparent 55%);
     background-attachment: fixed;
   }
   .dark body {
@@ -84,10 +84,10 @@
 
 @layer utilities {
   .gradient-brand {
-    background: linear-gradient(135deg, #4C2A85 0%, #6C449E 50%, #8B63CC 100%);
+    background: linear-gradient(135deg, #2A164B 0%, #3B2068 45%, #6C449E 100%);
   }
   .gradient-gold {
-    background: linear-gradient(135deg, #D4AF37 0%, #F0D375 100%);
+    background: linear-gradient(135deg, #B0902C 0%, #D4AF37 55%, #E7C963 100%);
   }
   .gradient-social {
     background: linear-gradient(135deg, #4C2A85 0%, #8B63CC 50%, #14B8A6 100%);
