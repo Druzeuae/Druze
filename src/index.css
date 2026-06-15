@@ -32,30 +32,31 @@
   }
 
   .dark {
-    --background: 265 35% 8%;
-    --foreground: 0 0% 98%;
+    /* Obsidian-aubergine luxury — deep near-black plum with champagne gold */
+    --background: 270 30% 6%;
+    --foreground: 40 30% 94%;
 
-    --card: 265 30% 12%;
-    --card-foreground: 0 0% 98%;
+    --card: 270 26% 10%;
+    --card-foreground: 40 30% 94%;
 
-    --popover: 265 30% 12%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 270 26% 10%;
+    --popover-foreground: 40 30% 94%;
 
-    --secondary: 265 25% 18%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 270 22% 16%;
+    --secondary-foreground: 40 25% 90%;
 
-    --muted: 265 20% 18%;
-    --muted-foreground: 240 10% 65%;
+    --muted: 270 18% 15%;
+    --muted-foreground: 40 12% 64%;
 
-    --accent: 265 25% 20%;
-    --accent-foreground: 45 65% 80%;
+    --accent: 42 50% 16%;
+    --accent-foreground: 42 70% 78%;
 
     --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 265 20% 22%;
-    --input: 265 20% 22%;
-    --ring: 45 65% 55%;
+    --border: 270 20% 20%;
+    --input: 270 20% 20%;
+    --ring: 42 75% 55%;
   }
 }
 

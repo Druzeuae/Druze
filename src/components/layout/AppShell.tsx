@@ -41,7 +41,7 @@ export function AppShell() {
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between gap-4">
-          <NavLink to="/community">
+          <NavLink to="/events">
             <Logo />
           </NavLink>
 

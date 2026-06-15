@@ -51,14 +51,14 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* 🟢 Landing → Community hub (guests welcome) */}
+      {/* 🟢 Landing → Events (guests welcome) */}
       <Route
         path="/"
         element={
           isAuthenticated && !onboardingCompleted ? (
             <Navigate to="/onboarding" replace />
           ) : (
-            <Navigate to="/community" replace />
+            <Navigate to="/events" replace />
           )
         }
       />
