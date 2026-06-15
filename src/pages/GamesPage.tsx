@@ -18,7 +18,7 @@ import { useApp } from "@/context/AppContext";
 import { cn, initials } from "@/lib/utils";
 import { GAMES } from "@/data/gamesData";
 import type { GameType } from "@/types/app";
-import { TriviaGame } from "@/components/games/TriviaGame";
+import { RealtimeTrivia } from "@/components/games/RealtimeTrivia";
 import { WouldYouRatherGame } from "@/components/games/WouldYouRatherGame";
 import { NeverHaveIEverGame } from "@/components/games/NeverHaveIEverGame";
 import { TwoTruthsGame } from "@/components/games/TwoTruthsGame";
@@ -63,7 +63,12 @@ export default function GamesPage() {
           </div>
 
           <CardContent className="p-5 sm:p-6">
-            {activeRoom.gameType === "trivia" && <TriviaGame />}
+            {activeRoom.gameType === "trivia" && (
+              <RealtimeTrivia
+                roomId={activeRoom.id}
+                self={{ playerId: currentUser.id, name: currentUser.displayName, avatar: currentUser.photos[0] }}
+              />
+            )}
             {activeRoom.gameType === "would_you_rather" && <WouldYouRatherGame />}
             {activeRoom.gameType === "never_have_i_ever" && <NeverHaveIEverGame />}
             {activeRoom.gameType === "two_truths" && <TwoTruthsGame />}

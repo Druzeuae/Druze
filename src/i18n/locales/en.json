@@ -294,6 +294,24 @@
       "iHave": "I have",
       "iNever": "I never"
     },
+    "realtime": {
+      "connecting": "Connecting to the room...",
+      "connectFailed": "Couldn't connect to the live room",
+      "connectFailedHint": "Your network may be blocking the live connection. Try again, or switch network / disable a VPN or firewall.",
+      "retry": "Try again",
+      "live": "Live",
+      "you": "you",
+      "lobbyTitle": "Waiting room",
+      "lobbyDesc": "Everyone here plays the same questions together, live.",
+      "startGame": "Start game",
+      "waitingHost": "Waiting for the host to continue...",
+      "waitingOthers": "Answer locked in — waiting for others...",
+      "answered": "{{count}}/{{total}} answered",
+      "reveal": "Reveal answer & scores",
+      "leaderboard": "Leaderboard",
+      "finalScores": "Final scores",
+      "host": "Host"
+    },
     "twoTruths": {
       "writeHint": "Write 3 statements about yourself — two true, one false. Tap to mark which one is the lie, then pass the phone!",
       "statement": "Statement {{n}}",
