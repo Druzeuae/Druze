@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { AppProvider, useApp } from "@/context/AppContext";
 import { Toaster } from "@/components/ui/toaster";
 import { AppShell } from "@/components/layout/AppShell";
+import { RegisterWall, RegisterGate } from "@/components/common/RegisterPrompt";
 
 import AuthPage from "@/pages/AuthPage";
 import OnboardingPage from "@/pages/OnboardingPage";
@@ -26,19 +27,20 @@ import PremiumPage from "@/pages/PremiumPage";
 import AdminPage from "@/pages/admin/AdminPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 
-function RequireAuth({ children }: { children: ReactNode }) {
+/** Members-only: guests see an inline register gate (keeping the shell + nav). */
+function RequireAuth({ children, titleKey, bodyKey }: { children: ReactNode; titleKey?: string; bodyKey?: string }) {
   const { isAuthenticated, onboardingCompleted } = useApp();
 
-  if (!isAuthenticated) return <Navigate to="/" replace />;
+  if (!isAuthenticated) return <RegisterGate titleKey={titleKey} bodyKey={bodyKey} />;
   if (!onboardingCompleted) return <Navigate to="/onboarding" replace />;
 
   return <>{children}</>;
 }
 
 function RequireAdmin({ children }: { children: ReactNode }) {
-  const { currentUser } = useApp();
+  const { currentUser, isAuthenticated } = useApp();
 
-  if (!currentUser?.isAdmin) return <Navigate to="/discover" replace />;
+  if (!isAuthenticated || !currentUser?.isAdmin) return <Navigate to="/discover" replace />;
 
   return <>{children}</>;
 }
@@ -48,36 +50,33 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* 🟢 الصفحة الرئيسية */}
+      {/* 🟢 Landing → straight into the app (guests welcome) */}
       <Route
         path="/"
         element={
-          isAuthenticated ? (
-            onboardingCompleted ? (
-              <Navigate to="/discover" replace />
-            ) : (
-              <Navigate to="/onboarding" replace />
-            )
+          isAuthenticated && !onboardingCompleted ? (
+            <Navigate to="/onboarding" replace />
           ) : (
-            <AuthPage />
+            <Navigate to="/discover" replace />
           )
         }
       />
 
-      {/* 🟢 Login page (NEW) */}
+      {/* 🟢 Sign up / Log in (only when the visitor chooses to) */}
+      <Route
+        path="/auth"
+        element={
+          isAuthenticated && onboardingCompleted ? <Navigate to="/discover" replace /> : <AuthPage />
+        }
+      />
       <Route path="/login" element={<LoginPage />} />
 
       {/* 🟢 Onboarding */}
       <Route path="/onboarding" element={<OnboardingPage />} />
 
-      {/* 🟢 Protected App */}
-      <Route
-        element={
-          <RequireAuth>
-            <AppShell />
-          </RequireAuth>
-        }
-      >
+      {/* 🟢 App shell — open to everyone; members-only pages gated inside */}
+      <Route element={<AppShell />}>
+        {/* Open to guests (explore freely) */}
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/games" element={<GamesPage />} />
@@ -86,15 +85,20 @@ function AppRoutes() {
         <Route path="/community/moments" element={<MomentsPage />} />
         <Route path="/community/villages" element={<VillagesPage />} />
         <Route path="/community/matte" element={<MatteCirclesPage />} />
-        <Route path="/matches" element={<MatchesPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/chat/:conversationId" element={<ChatPage />} />
         <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/edit" element={<ProfileEditPage />} />
-        <Route path="/profile/:userId" element={<PublicProfilePage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/premium" element={<PremiumPage />} />
+
+        {/* Members only (guests see a register gate) */}
+        <Route
+          path="/matches"
+          element={<RequireAuth titleKey="guest.gateMatchesTitle" bodyKey="guest.gateMatchesBody"><MatchesPage /></RequireAuth>}
+        />
+        <Route path="/chat" element={<RequireAuth titleKey="guest.gateChatTitle" bodyKey="guest.gateChatBody"><ChatPage /></RequireAuth>} />
+        <Route path="/chat/:conversationId" element={<RequireAuth titleKey="guest.gateChatTitle" bodyKey="guest.gateChatBody"><ChatPage /></RequireAuth>} />
+        <Route path="/profile" element={<RequireAuth><ProfilePage /></RequireAuth>} />
+        <Route path="/profile/edit" element={<RequireAuth><ProfileEditPage /></RequireAuth>} />
+        <Route path="/profile/:userId" element={<RequireAuth titleKey="guest.gateProfileTitle" bodyKey="guest.gateProfileBody"><PublicProfilePage /></RequireAuth>} />
+        <Route path="/settings" element={<RequireAuth><SettingsPage /></RequireAuth>} />
+        <Route path="/premium" element={<RequireAuth><PremiumPage /></RequireAuth>} />
 
         {/* 🟢 Admin */}
         <Route
@@ -117,6 +121,7 @@ export default function App() {
   return (
     <AppProvider>
       <AppRoutes />
+      <RegisterWall />
       <Toaster />
     </AppProvider>
   );

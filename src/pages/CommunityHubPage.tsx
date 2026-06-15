@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useApp } from "@/context/AppContext";
 import { cn, initials } from "@/lib/utils";
@@ -26,7 +27,7 @@ const SECTIONS = [
 
 export default function CommunityHubPage() {
   const { t } = useTranslation();
-  const { currentUser, profiles } = useApp();
+  const { currentUser, profiles, isGuest, promptRegister } = useApp();
 
   const myPoints = contributionOf(currentUser);
   const meta = standingOf(myPoints);
@@ -49,6 +50,18 @@ export default function CommunityHubPage() {
       </div>
 
       {/* Standing card — Saf Al-Ikhwan */}
+      {isGuest ? (
+        <Card className="mb-6 overflow-hidden">
+          <div className="gradient-social flex flex-col items-center gap-2 p-6 text-center text-white">
+            <p className="text-sm font-semibold uppercase tracking-wide opacity-90">{t("community.standing.title")}</p>
+            <p className="text-xl font-extrabold">{t("guest.standingTitle")}</p>
+            <p className="max-w-sm text-sm text-white/85">{t("guest.standingBody")}</p>
+            <Button className="mt-2 bg-white text-primary hover:bg-white/90" onClick={promptRegister}>
+              {t("guest.createProfile")}
+            </Button>
+          </div>
+        </Card>
+      ) : (
       <Card className="mb-6 overflow-hidden">
         <div className={cn("p-5 text-white", meta.gradient)}>
           <div className="flex items-center justify-between gap-3">
@@ -92,6 +105,7 @@ export default function CommunityHubPage() {
           </div>
         </CardContent>
       </Card>
+      )}
 
       {/* Section cards */}
       <div className="mb-6 grid gap-3 sm:grid-cols-2">

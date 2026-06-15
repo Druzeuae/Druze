@@ -1,13 +1,13 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { SlidersHorizontal } from "lucide-react";
+import { Lock, SlidersHorizontal, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProfileCard } from "@/components/discovery/ProfileCard";
 import { FilterPanel } from "@/components/discovery/FilterPanel";
 import { useApp, sharedInterestCount } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
-import { calculateAge } from "@/lib/utils";
+import { calculateAge, cn } from "@/lib/utils";
 import type { DiscoveryFilters } from "@/types/app";
 
 const DEFAULT_FILTERS: DiscoveryFilters = {
@@ -35,6 +35,8 @@ export default function DiscoverPage() {
     saveUser,
     unsaveUser,
     appreciationsSentToday,
+    isGuest,
+    promptRegister,
   } = useApp();
 
   const [filters, setFilters] = useState<DiscoveryFilters>(DEFAULT_FILTERS);
@@ -116,18 +118,42 @@ export default function DiscoverPage() {
           <p className="text-lg font-semibold">{t("discovery.noResults")}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {filteredProfiles.map((profile) => (
-            <ProfileCard
-              key={profile.id}
-              profile={profile}
-              sharedInterests={sharedInterestCount(currentUser, profile)}
-              isSaved={savedUserIds.includes(profile.id)}
-              isAppreciated={appreciations.some((a) => a.fromUserId === currentUser.id && a.toUserId === profile.id)}
-              onAppreciate={() => handleAppreciate(profile.id)}
-              onSave={() => (savedUserIds.includes(profile.id) ? unsaveUser(profile.id) : saveUser(profile.id))}
-            />
-          ))}
+        <div className="relative">
+          <div
+            className={cn(
+              "grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4",
+              isGuest && "pointer-events-none select-none blur-[7px]"
+            )}
+            aria-hidden={isGuest}
+          >
+            {filteredProfiles.map((profile) => (
+              <ProfileCard
+                key={profile.id}
+                profile={profile}
+                sharedInterests={sharedInterestCount(currentUser, profile)}
+                isSaved={savedUserIds.includes(profile.id)}
+                isAppreciated={appreciations.some((a) => a.fromUserId === currentUser.id && a.toUserId === profile.id)}
+                onAppreciate={() => handleAppreciate(profile.id)}
+                onSave={() => (savedUserIds.includes(profile.id) ? unsaveUser(profile.id) : saveUser(profile.id))}
+              />
+            ))}
+          </div>
+
+          {isGuest && (
+            <div className="absolute inset-0 flex items-start justify-center pt-10 sm:pt-16">
+              <div className="mx-4 max-w-sm rounded-2xl border border-border bg-background/95 p-6 text-center shadow-xl backdrop-blur">
+                <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl gradient-brand text-white">
+                  <Lock className="h-7 w-7" />
+                </div>
+                <h3 className="text-lg font-extrabold">{t("guest.discoverLockTitle")}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{t("guest.discoverLockBody")}</p>
+                <Button className="mt-4 w-full" size="lg" onClick={promptRegister}>
+                  <Sparkles className="h-4 w-4" /> {t("guest.createProfile")}
+                </Button>
+                <p className="mt-2 text-xs text-muted-foreground">{t("guest.freeNoEmail")}</p>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

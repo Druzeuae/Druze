@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Compass, CalendarDays, Gamepad2, Users2, Heart, MessageCircle, Bell, User, Shield, Moon, Sun } from "lucide-react";
+import { Compass, CalendarDays, Gamepad2, Users2, Heart, MessageCircle, Bell, User, Shield, Moon, Sun, Sparkles } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -23,7 +23,7 @@ const NAV_ITEMS = [
 
 export function AppShell() {
   const { t } = useTranslation();
-  const { currentUser, notifications, conversations } = useApp();
+  const { currentUser, notifications, conversations, isGuest } = useApp();
   const { isDark, toggle } = useDarkMode();
 
   const unreadNotifications = notifications.filter((n) => !n.isRead).length;
@@ -32,7 +32,7 @@ export function AppShell() {
   ).length;
 
   return (
-    <div className="min-h-screen bg-muted/40 dark:bg-background">
+    <div className="min-h-screen bg-transparent">
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between gap-4">
@@ -73,21 +73,42 @@ export function AppShell() {
             <Button variant="ghost" size="icon" onClick={toggle} aria-label="Toggle dark mode">
               {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
             </Button>
-            {currentUser.isAdmin && (
-              <NavLink to="/admin">
-                <Button variant="ghost" size="icon" aria-label="Admin panel">
-                  <Shield className="h-4 w-4" />
+            {isGuest ? (
+              <NavLink to="/auth">
+                <Button size="sm" className="gradient-gold text-gold-foreground">
+                  {t("guest.signUp")}
                 </Button>
               </NavLink>
+            ) : (
+              <>
+                {currentUser.isAdmin && (
+                  <NavLink to="/admin">
+                    <Button variant="ghost" size="icon" aria-label="Admin panel">
+                      <Shield className="h-4 w-4" />
+                    </Button>
+                  </NavLink>
+                )}
+                <NavLink to="/profile">
+                  <Avatar className="h-9 w-9 ring-2 ring-primary-100">
+                    <AvatarImage src={currentUser.photos[0]} alt={currentUser.displayName} />
+                    <AvatarFallback>{initials(currentUser.displayName)}</AvatarFallback>
+                  </Avatar>
+                </NavLink>
+              </>
             )}
-            <NavLink to="/profile">
-              <Avatar className="h-9 w-9 ring-2 ring-primary-100">
-                <AvatarImage src={currentUser.photos[0]} alt={currentUser.displayName} />
-                <AvatarFallback>{initials(currentUser.displayName)}</AvatarFallback>
-              </Avatar>
-            </NavLink>
           </div>
         </div>
+
+        {/* Guest banner */}
+        {isGuest && (
+          <NavLink to="/auth" className="block gradient-brand">
+            <div className="container flex items-center justify-center gap-2 py-1.5 text-center text-xs font-semibold text-white sm:text-sm">
+              <Sparkles className="h-4 w-4 shrink-0" />
+              <span>{t("guest.banner")}</span>
+              <span className="hidden rounded-full bg-white/20 px-2 py-0.5 sm:inline">{t("guest.bannerCta")}</span>
+            </div>
+          </NavLink>
+        )}
       </header>
 
       {/* Page content */}

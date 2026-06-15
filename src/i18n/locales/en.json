@@ -45,6 +45,28 @@
     "clear": "Clear",
     "reset": "Reset"
   },
+  "guest": {
+    "signUp": "Sign up",
+    "banner": "You're exploring as a guest — everything's open to look around.",
+    "bannerCta": "Create your free profile",
+    "wallTitle": "Create your profile",
+    "wallBody": "Make a free profile to connect, match, and join in. No long forms — it only takes a moment.",
+    "createProfile": "Create my profile",
+    "keepBrowsing": "Keep browsing",
+    "gateTitle": "Members only",
+    "gateBody": "Create your free profile to unlock this.",
+    "freeNoEmail": "Free — explore first, no commitment.",
+    "gateMatchesTitle": "Your matches await",
+    "gateMatchesBody": "Create a profile to start matching with the community.",
+    "gateChatTitle": "Start the conversation",
+    "gateChatBody": "Create a profile to message and chat with members.",
+    "gateProfileTitle": "See full profiles",
+    "gateProfileBody": "Create a profile to view members and connect.",
+    "discoverLockTitle": "Discover the community",
+    "discoverLockBody": "Browse freely — create a free profile to see members and start matching.",
+    "standingTitle": "Start your Saf Al-Ikhwan journey",
+    "standingBody": "Create a profile to earn community standing by giving back."
+  },
   "auth": {
     "welcome": "Welcome to DRUZE UAE",
     "subtitle": "A trusted community for Druze residents in the UAE and their friends & allies.",

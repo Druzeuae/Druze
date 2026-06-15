@@ -120,6 +120,11 @@ interface AppContextValue extends PersistedState {
   leaveVillage: (villageId: string) => void;
   joinMatteCircle: (circleId: string) => void;
   leaveMatteCircle: (circleId: string) => void;
+  /** True when browsing without an account. */
+  isGuest: boolean;
+  registerPromptOpen: boolean;
+  promptRegister: () => void;
+  closeRegisterPrompt: () => void;
 }
 
 const AppContext = createContext<AppContextValue | undefined>(undefined);
@@ -175,6 +180,18 @@ function loadInitialState(): PersistedState {
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState<PersistedState>(loadInitialState);
+
+  // Guest gate: open a "create your profile" prompt when a visitor tries a
+  // members-only action. Not persisted.
+  const [registerPromptOpen, setRegisterPromptOpen] = useState(false);
+  const promptRegister = () => setRegisterPromptOpen(true);
+  const closeRegisterPrompt = () => setRegisterPromptOpen(false);
+  /** Returns true if the user may act; otherwise opens the register prompt. */
+  const requireAuth = (): boolean => {
+    if (state.isAuthenticated) return true;
+    setRegisterPromptOpen(true);
+    return false;
+  };
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -251,6 +268,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     });
 
   const appreciateUser = (userId: string, message?: string): { matched: boolean } => {
+    if (!requireAuth()) return { matched: false };
     let matched = false;
     setState((s) => {
       const reciprocal = s.appreciations.find(
@@ -348,11 +366,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return { matched };
   };
 
-  const saveUser = (userId: string) =>
+  const saveUser = (userId: string) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       savedUserIds: Array.from(new Set([...s.savedUserIds, userId])),
     }));
+  };
 
   const unsaveUser = (userId: string) =>
     setState((s) => ({
@@ -529,7 +549,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const createActivity = (
     activity: Omit<AppActivity, "id" | "createdBy" | "createdAt" | "participantIds">
-  ) =>
+  ) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       activities: [
@@ -543,8 +564,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         ...s.activities,
       ],
     }));
+  };
 
-  const joinActivity = (activityId: string) =>
+  const joinActivity = (activityId: string) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       activities: s.activities.map((a) =>
@@ -553,6 +576,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           : a
       ),
     }));
+  };
 
   const leaveActivity = (activityId: string) =>
     setState((s) => ({
@@ -617,7 +641,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     };
   };
 
-  const postMajlisTopic = (input: { title: string; body: string; category: MajlisCategory }) =>
+  const postMajlisTopic = (input: { title: string; body: string; category: MajlisCategory }) => {
+    if (!requireAuth()) return;
     setState((s) =>
       award(
         {
@@ -639,8 +664,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         15
       )
     );
+  };
 
-  const replyToMajlis = (topicId: string, body: string) =>
+  const replyToMajlis = (topicId: string, body: string) => {
+    if (!requireAuth()) return;
     setState((s) =>
       award(
         {
@@ -660,8 +687,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         8
       )
     );
+  };
 
-  const toggleMajlisLike = (topicId: string) =>
+  const toggleMajlisLike = (topicId: string) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       majlisTopics: s.majlisTopics.map((t) =>
@@ -675,8 +704,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           : t
       ),
     }));
+  };
 
-  const postMoment = (input: { title: string; body: string; type: MomentType }) =>
+  const postMoment = (input: { title: string; body: string; type: MomentType }) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       communityMoments: [
@@ -692,8 +723,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         ...s.communityMoments,
       ],
     }));
+  };
 
-  const toggleMomentSupport = (momentId: string) =>
+  const toggleMomentSupport = (momentId: string) => {
+    if (!requireAuth()) return;
     setState((s) => {
       const moment = s.communityMoments.find((m) => m.id === momentId);
       const alreadySupporting = moment?.supportIds.includes(s.currentUser.id);
@@ -713,8 +746,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       // Showing up for someone earns presence points (only when adding support).
       return alreadySupporting ? next : award(next, 8);
     });
+  };
 
-  const joinVillage = (villageId: string) =>
+  const joinVillage = (villageId: string) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       villages: s.villages.map((v) =>
@@ -725,6 +760,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       currentUser: { ...s.currentUser, village: villageId },
       profiles: s.profiles.map((p) => (p.id === s.currentUser.id ? { ...p, village: villageId } : p)),
     }));
+  };
 
   const leaveVillage = (villageId: string) =>
     setState((s) => ({
@@ -734,7 +770,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
-  const joinMatteCircle = (circleId: string) =>
+  const joinMatteCircle = (circleId: string) => {
+    if (!requireAuth()) return;
     setState((s) => ({
       ...s,
       matteCircles: s.matteCircles.map((c) =>
@@ -743,6 +780,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           : c
       ),
     }));
+  };
 
   const leaveMatteCircle = (circleId: string) =>
     setState((s) => ({
@@ -795,8 +833,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       leaveVillage,
       joinMatteCircle,
       leaveMatteCircle,
+      isGuest: !state.isAuthenticated,
+      registerPromptOpen,
+      promptRegister,
+      closeRegisterPrompt,
     }),
-    [state]
+    [state, registerPromptOpen]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
