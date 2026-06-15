@@ -32,21 +32,21 @@
   }
 
   .dark {
-    /* Glassmorphism luxury — near-black violet base, frosted cards, violet glow */
-    --background: 258 41% 5%; /* #0b0813 */
+    /* Electric navy glassmorphism — deep navy base, frosted cards, blue glow */
+    --background: 222 47% 6%; /* deep navy near-black */
     --foreground: 0 0% 100%;
 
-    --card: 255 34% 11% / 0.7; /* frosted #171224 @ 70% */
+    --card: 220 40% 12% / 0.7; /* frosted navy @ 70% */
     --card-foreground: 0 0% 100%;
 
-    --popover: 255 30% 9%;
+    --popover: 220 42% 9%;
     --popover-foreground: 0 0% 100%;
 
-    --secondary: 255 24% 16%;
+    --secondary: 220 32% 17%;
     --secondary-foreground: 0 0% 96%;
 
-    --muted: 255 20% 15%;
-    --muted-foreground: 220 9% 64%; /* #9ca3af */
+    --muted: 220 28% 15%;
+    --muted-foreground: 215 16% 65%;
 
     --accent: 38 92% 14%;
     --accent-foreground: 38 92% 60%;
@@ -54,9 +54,9 @@
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 100% / 0.08;
-    --input: 0 0% 100% / 0.12;
-    --ring: 270 91% 65%;
+    --border: 210 100% 80% / 0.1;
+    --input: 210 100% 80% / 0.14;
+    --ring: 213 94% 60%;
   }
 }
 
@@ -75,8 +75,8 @@
   }
   .dark body {
     background-image:
-      radial-gradient(1100px 600px at 100% -10%, hsl(280 90% 55% / 0.18), transparent 60%),
-      radial-gradient(900px 520px at -10% 5%, hsl(258 90% 60% / 0.16), transparent 55%);
+      radial-gradient(1100px 600px at 100% -10%, hsl(199 89% 48% / 0.18), transparent 60%),
+      radial-gradient(900px 520px at -10% 5%, hsl(217 91% 50% / 0.18), transparent 55%);
   }
   html[dir="rtl"] body {
     font-family: "Cairo", "Inter", ui-sans-serif, system-ui;
@@ -85,13 +85,20 @@
 
 @layer utilities {
   .gradient-brand {
-    background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%);
+    background: linear-gradient(120deg, #1E3A8A 0%, #2563EB 30%, #06B6D4 55%, #3B82F6 80%, #1E3A8A 100%);
+    background-size: 280% 280%;
+    animation: brand-flow 9s ease infinite;
+  }
+  @keyframes brand-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
   .gradient-gold {
     background: linear-gradient(135deg, #B45309 0%, #F59E0B 55%, #FBBF24 100%);
   }
   .gradient-social {
-    background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 55%, #14B8A6 100%);
+    background: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #06B6D4 100%);
   }
   .gradient-teal {
     background: linear-gradient(135deg, #0C766D 0%, #14B8A6 50%, #6EE7CB 100%);
@@ -100,14 +107,14 @@
     background: linear-gradient(135deg, #C0432A 0%, #FF7A59 50%, #FFC1AD 100%);
   }
   .text-gradient-brand {
-    background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #06B6D4 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
   /* Vibrant per-item nav gradients */
-  .gradient-violet { background: linear-gradient(135deg, #8B5CF6 0%, #D946EF 100%); }
-  .gradient-indigo { background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%); }
+  .gradient-violet { background: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%); }
+  .gradient-indigo { background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%); }
   .gradient-sky    { background: linear-gradient(135deg, #0EA5E9 0%, #22D3EE 100%); }
   .gradient-emerald{ background: linear-gradient(135deg, #10B981 0%, #34D399 100%); }
   .gradient-rose   { background: linear-gradient(135deg, #F43F5E 0%, #FB7185 100%); }

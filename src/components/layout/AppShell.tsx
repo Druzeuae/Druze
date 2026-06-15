@@ -60,7 +60,7 @@ export function AppShell() {
                     <span
                       style={{ animationDelay: `${i * 0.25}s` }}
                       className={cn(
-                        "animate-nav-float relative flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_14px_30px_-8px_rgba(139,92,246,0.7)]",
+                        "animate-nav-float relative flex h-14 w-14 items-center justify-center rounded-2xl text-white shadow-lg transition-all duration-300 group-hover:scale-125 group-hover:shadow-[0_14px_30px_-8px_rgba(37,99,235,0.7)]",
                         item.gradient,
                         isActive && "ring-2 ring-primary ring-offset-2 ring-offset-background"
                       )}
@@ -163,7 +163,7 @@ export function AppShell() {
                     "animate-nav-float relative flex h-12 w-12 items-center justify-center rounded-2xl text-white shadow-md transition-all duration-300 active:scale-110",
                     item.gradient,
                     isActive
-                      ? "ring-2 ring-primary ring-offset-2 ring-offset-background shadow-[0_8px_20px_-6px_rgba(139,92,246,0.6)]"
+                      ? "ring-2 ring-primary ring-offset-2 ring-offset-background shadow-[0_8px_20px_-6px_rgba(37,99,235,0.6)]"
                       : "opacity-90"
                   )}
                 >
