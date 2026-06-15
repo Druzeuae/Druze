@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CoverImage } from "@/components/common/CoverImage";
 import { useApp } from "@/context/AppContext";
 import { initials } from "@/lib/utils";
 
@@ -30,15 +31,17 @@ export default function VillagesPage() {
           const members = v.memberIds.map((id) => profiles.find((p) => p.id === id)).filter(Boolean);
           return (
             <Card key={v.id} className="overflow-hidden">
-              <div className="gradient-teal flex items-center gap-2 px-4 py-3 text-white">
-                <MapPin className="h-5 w-5" />
-                <div>
-                  <h3 className="text-lg font-bold leading-tight">{isAr ? v.nameAr : v.name}</h3>
-                  <p className="text-xs opacity-90">
-                    {isAr ? v.regionAr : v.region} · {isAr ? v.countryAr : v.country}
-                  </p>
+              <CoverImage src={v.image} gradient="gradient-teal" className="h-32">
+                <div className="absolute bottom-0 start-0 end-0 flex items-center gap-2 p-3 text-white">
+                  <MapPin className="h-5 w-5 shrink-0" />
+                  <div>
+                    <h3 className="text-lg font-bold leading-tight drop-shadow">{isAr ? v.nameAr : v.name}</h3>
+                    <p className="text-xs opacity-95 drop-shadow">
+                      {isAr ? v.regionAr : v.region} · {isAr ? v.countryAr : v.country}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </CoverImage>
               <CardContent className="space-y-3 p-4">
                 <p className="text-sm text-muted-foreground">{isAr ? v.blurbAr : v.blurb}</p>
                 <div className="flex items-center justify-between gap-2">

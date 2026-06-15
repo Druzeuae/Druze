@@ -9,6 +9,7 @@
     "community": "المجتمع",
     "activities": "الأنشطة",
     "games": "الألعاب",
+    "events": "الفعاليات",
     "chat": "المحادثات",
     "notifications": "الإشعارات",
     "profile": "الملف الشخصي",
@@ -336,6 +337,23 @@
     "mode": {
       "in_person": "حضورياً",
       "online": "أونلاين"
+    }
+  },
+  "events": {
+    "title": "فعاليات المجتمع",
+    "subtitle": "فعاليات على مستوى المجتمع — انضم لما يعجبك",
+    "all": "الكل",
+    "official": "رسمية",
+    "optional": "الحضور اختياري — انضم إن رغبت.",
+    "join": "سأحضر",
+    "attending": "سأحضر",
+    "going": "{{count}} سيحضرون",
+    "categories": {
+      "religious": "ديني",
+      "national": "وطني",
+      "social": "اجتماعي",
+      "anniversary": "ذكرى سنوية",
+      "cultural": "ثقافي"
     }
   },
   "activities": {

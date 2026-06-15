@@ -215,6 +215,7 @@ export interface Village {
   countryAr: string;
   blurb: string;
   blurbAr: string;
+  image?: string;
   memberIds: string[];
 }
 
@@ -231,7 +232,28 @@ export interface MatteCircle {
   locationAr?: string;
   blurb: string;
   blurbAr?: string;
+  image?: string;
   memberIds: string[];
+}
+
+export type EventCategory = "religious" | "national" | "social" | "anniversary" | "cultural";
+
+export interface CommunityEvent {
+  id: string;
+  title: string;
+  titleAr: string;
+  description: string;
+  descriptionAr: string;
+  category: EventCategory;
+  /** ISO date(time) */
+  date: string;
+  endDate?: string;
+  location: string;
+  locationAr: string;
+  image?: string;
+  /** Official society-wide event vs community-organized. */
+  official: boolean;
+  attendeeIds: string[];
 }
 
 export type GameType = "trivia" | "would_you_rather" | "never_have_i_ever" | "two_truths";

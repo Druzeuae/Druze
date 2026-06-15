@@ -8,6 +8,7 @@
     "community": "Community",
     "activities": "Activities",
     "games": "Games",
+    "events": "Events",
     "matches": "Matches",
     "chat": "Chat",
     "notifications": "Notifications",
@@ -336,6 +337,23 @@
     "mode": {
       "in_person": "In person",
       "online": "Online"
+    }
+  },
+  "events": {
+    "title": "Community Events",
+    "subtitle": "Society-wide events — join the ones you like",
+    "all": "All",
+    "official": "Official",
+    "optional": "Attendance is optional — join if you'd like to.",
+    "join": "I'll attend",
+    "attending": "Attending",
+    "going": "{{count}} attending",
+    "categories": {
+      "religious": "Religious",
+      "national": "National",
+      "social": "Social",
+      "anniversary": "Anniversary",
+      "cultural": "Cultural"
     }
   },
   "activities": {

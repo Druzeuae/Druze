@@ -11,6 +11,7 @@ import OnboardingPage from "@/pages/OnboardingPage";
 import DiscoverPage from "@/pages/DiscoverPage";
 import ActivitiesPage from "@/pages/ActivitiesPage";
 import GamesPage from "@/pages/GamesPage";
+import EventsPage from "@/pages/EventsPage";
 import CommunityHubPage from "@/pages/CommunityHubPage";
 import MajlisPage from "@/pages/MajlisPage";
 import MomentsPage from "@/pages/MomentsPage";
@@ -50,14 +51,14 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* 🟢 Landing → straight into the app (guests welcome) */}
+      {/* 🟢 Landing → Community hub (guests welcome) */}
       <Route
         path="/"
         element={
           isAuthenticated && !onboardingCompleted ? (
             <Navigate to="/onboarding" replace />
           ) : (
-            <Navigate to="/discover" replace />
+            <Navigate to="/community" replace />
           )
         }
       />
@@ -80,6 +81,7 @@ function AppRoutes() {
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/games" element={<GamesPage />} />
+        <Route path="/events" element={<EventsPage />} />
         <Route path="/community" element={<CommunityHubPage />} />
         <Route path="/community/majlis" element={<MajlisPage />} />
         <Route path="/community/moments" element={<MomentsPage />} />

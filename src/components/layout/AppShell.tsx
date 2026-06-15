@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Compass, CalendarDays, Gamepad2, Users2, Heart, MessageCircle, Bell, User, Shield, Moon, Sun, Sparkles } from "lucide-react";
+import { Compass, CalendarDays, CalendarHeart, Gamepad2, Users2, Heart, MessageCircle, Bell, User, Shield, Moon, Sun, Sparkles } from "lucide-react";
 import { Logo } from "@/components/common/Logo";
 import { LanguageSwitcher } from "@/components/common/LanguageSwitcher";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -15,6 +15,7 @@ const NAV_ITEMS = [
   { to: "/community", icon: Users2, labelKey: "nav.community" },
   { to: "/activities", icon: CalendarDays, labelKey: "nav.activities" },
   { to: "/games", icon: Gamepad2, labelKey: "nav.games" },
+  { to: "/events", icon: CalendarHeart, labelKey: "nav.events" },
   // Members only — hidden for guests until they create a profile.
   { to: "/matches", icon: Heart, labelKey: "nav.matches", memberOnly: true },
   { to: "/chat", icon: MessageCircle, labelKey: "nav.chat", memberOnly: true },
@@ -40,7 +41,7 @@ export function AppShell() {
       {/* Top bar */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
         <div className="container flex h-16 items-center justify-between gap-4">
-          <NavLink to="/discover">
+          <NavLink to="/community">
             <Logo />
           </NavLink>
 

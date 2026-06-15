@@ -12,6 +12,7 @@ import {
   MOCK_PROFILES,
 } from "@/data/mockData";
 import {
+  COMMUNITY_EVENTS,
   COMMUNITY_MOMENTS,
   MAJLIS_TOPICS,
   MATTE_CIRCLES,
@@ -31,6 +32,7 @@ import type {
   AppNotification,
   AppProfile,
   AppReport,
+  CommunityEvent,
   CommunityMoment,
   GameType,
   MajlisCategory,
@@ -76,6 +78,7 @@ interface PersistedState {
   communityMoments: CommunityMoment[];
   matteCircles: MatteCircle[];
   villages: Village[];
+  communityEvents: CommunityEvent[];
 }
 
 interface AppContextValue extends PersistedState {
@@ -120,6 +123,8 @@ interface AppContextValue extends PersistedState {
   leaveVillage: (villageId: string) => void;
   joinMatteCircle: (circleId: string) => void;
   leaveMatteCircle: (circleId: string) => void;
+  joinEvent: (eventId: string) => void;
+  leaveEvent: (eventId: string) => void;
   /** True when browsing without an account. */
   isGuest: boolean;
   registerPromptOpen: boolean;
@@ -142,6 +147,7 @@ function loadInitialState(): PersistedState {
       if (!parsed.communityMoments) parsed.communityMoments = COMMUNITY_MOMENTS;
       if (!parsed.matteCircles) parsed.matteCircles = MATTE_CIRCLES;
       if (!parsed.villages) parsed.villages = VILLAGES;
+      if (!parsed.communityEvents) parsed.communityEvents = COMMUNITY_EVENTS;
       if (parsed.currentUser && parsed.currentUser.contributionPoints === undefined) {
         parsed.currentUser = enrichProfile(parsed.currentUser);
       }
@@ -173,6 +179,7 @@ function loadInitialState(): PersistedState {
     communityMoments: COMMUNITY_MOMENTS,
     matteCircles: MATTE_CIRCLES,
     villages: VILLAGES,
+    communityEvents: COMMUNITY_EVENTS,
   };
 }
 
@@ -790,6 +797,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
+  const joinEvent = (eventId: string) => {
+    if (!requireAuth()) return;
+    setState((s) => ({
+      ...s,
+      communityEvents: s.communityEvents.map((e) =>
+        e.id === eventId && !e.attendeeIds.includes(s.currentUser.id)
+          ? { ...e, attendeeIds: [...e.attendeeIds, s.currentUser.id] }
+          : e
+      ),
+    }));
+  };
+
+  const leaveEvent = (eventId: string) =>
+    setState((s) => ({
+      ...s,
+      communityEvents: s.communityEvents.map((e) =>
+        e.id === eventId ? { ...e, attendeeIds: e.attendeeIds.filter((id) => id !== s.currentUser.id) } : e
+      ),
+    }));
+
   /* ---------------- VALUE ---------------- */
 
   const value = useMemo<AppContextValue>(
@@ -833,6 +860,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       leaveVillage,
       joinMatteCircle,
       leaveMatteCircle,
+      joinEvent,
+      leaveEvent,
       isGuest: !state.isAuthenticated,
       registerPromptOpen,
       promptRegister,

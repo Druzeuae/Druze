@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CoverImage } from "@/components/common/CoverImage";
 import { useApp } from "@/context/AppContext";
 import { initials } from "@/lib/utils";
 
@@ -33,16 +34,20 @@ export default function MatteCirclesPage() {
           const members = c.memberIds.map((id) => profiles.find((p) => p.id === id)).filter(Boolean);
           return (
             <Card key={c.id} className="overflow-hidden">
-              <div className="gradient-gold h-1.5 w-full" />
-              <CardContent className="space-y-3 p-4">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="text-lg font-bold leading-tight">{isAr && c.nameAr ? c.nameAr : c.name}</h3>
+              <CoverImage src={c.image} gradient="gradient-gold" className="h-36">
+                <div className="absolute end-3 top-3">
                   <Badge variant={c.mode === "online" ? "teal" : "gold"}>
                     {c.mode === "online" ? <Video className="h-3 w-3" /> : <MapPin className="h-3 w-3" />}
                     {t(`matte.mode.${c.mode}`)}
                   </Badge>
                 </div>
-
+                <div className="absolute bottom-0 start-0 end-0 p-3">
+                  <h3 className="text-lg font-bold leading-tight text-white drop-shadow">
+                    🧉 {isAr && c.nameAr ? c.nameAr : c.name}
+                  </h3>
+                </div>
+              </CoverImage>
+              <CardContent className="space-y-3 p-4">
                 <p className="text-sm text-muted-foreground">{isAr && c.blurbAr ? c.blurbAr : c.blurb}</p>
 
                 <div className="space-y-1.5 text-sm">
