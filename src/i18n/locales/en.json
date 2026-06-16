@@ -450,6 +450,8 @@
     "roomNamePlaceholder": "e.g. Friday Night Fun",
     "chooseGame": "Choose a game",
     "types": {
+      "tarneeb": { "name": "Tarneeb", "desc": "The classic 4-player card game — you & a partner vs 3 bots" },
+      "chess": { "name": "Chess", "desc": "Two players, one board — pass and play" },
       "mafia": { "name": "Mafia", "desc": "Social deduction — find the mafia before they win" },
       "spy": { "name": "Who's the Spy?", "desc": "Everyone knows the word — except the spy" },
       "trivia": { "name": "Trivia Challenge", "desc": "Test your knowledge across fun categories" },
@@ -507,6 +509,40 @@
       "truth": "Truth",
       "newRound": "New round"
     }
+  },
+  "chess": {
+    "white": "White",
+    "black": "Black",
+    "toMove": "to move",
+    "check": "Check!",
+    "checkmate": "Checkmate — {{winner}} wins!",
+    "stalemate": "Stalemate — it's a draw",
+    "draw": "Draw",
+    "undo": "Undo",
+    "newGame": "New game",
+    "passHint": "Two players, one device — take turns making moves."
+  },
+  "tarneeb": {
+    "youTeam": "You",
+    "themTeam": "Bots",
+    "trump": "Trump",
+    "tricks": "Tricks",
+    "contract": "Bid",
+    "yourHand": "Your hand",
+    "yourBid": "Your bid — how many tricks will your team take?",
+    "waitingBid": "{{name}} is bidding...",
+    "pass": "Pass",
+    "chooseTrump": "You won the bid — choose the trump suit",
+    "turnToPlay": "{{name}} to play",
+    "youMade": "Contract made — your team scores! 🎉",
+    "youSet": "Set! The bots score this round.",
+    "themMade": "The bots made their contract.",
+    "themSet": "You set the bots — your team scores! 🎉",
+    "matchWinner": "{{team}} win the match! 🏆",
+    "nextRound": "Next round",
+    "newMatch": "New match",
+    "restart": "Restart",
+    "seats": { "you": "You", "west": "West (bot)", "north": "Partner (bot)", "east": "East (bot)" }
   },
   "mafia": {
     "title": "Mafia",

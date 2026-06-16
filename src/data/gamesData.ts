@@ -1,8 +1,10 @@
 import {
   Brain,
+  Crown,
   Drama,
   Eye,
   Scale,
+  Spade,
   Sparkles,
   UserSearch,
   type LucideIcon,
@@ -23,6 +25,8 @@ export interface GameMeta {
 }
 
 export const GAMES: GameMeta[] = [
+  { id: "tarneeb", icon: Spade, gradient: "gradient-emerald", badgeVariant: "teal", minPlayers: 1, passAndPlay: true },
+  { id: "chess", icon: Crown, gradient: "gradient-indigo", badgeVariant: "intent", minPlayers: 2, passAndPlay: true },
   { id: "mafia", icon: Drama, gradient: "gradient-crimson", badgeVariant: "destructive", minPlayers: 5, passAndPlay: true },
   { id: "spy", icon: Eye, gradient: "gradient-indigo", badgeVariant: "intent", minPlayers: 3, passAndPlay: true },
   { id: "trivia", icon: Brain, gradient: "gradient-brand", badgeVariant: "intent", minPlayers: 1 },

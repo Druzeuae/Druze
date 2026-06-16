@@ -24,6 +24,8 @@ import { NeverHaveIEverGame } from "@/components/games/NeverHaveIEverGame";
 import { TwoTruthsGame } from "@/components/games/TwoTruthsGame";
 import { MafiaGame } from "@/components/games/MafiaGame";
 import { SpyGame } from "@/components/games/SpyGame";
+import { ChessGame } from "@/components/games/ChessGame";
+import { TarneebGame } from "@/components/games/TarneebGame";
 
 export default function GamesPage() {
   const { t, i18n } = useTranslation();
@@ -71,6 +73,8 @@ export default function GamesPage() {
           </div>
 
           <CardContent className="p-5 sm:p-6">
+            {playType === "tarneeb" && <TarneebGame />}
+            {playType === "chess" && <ChessGame />}
             {playType === "mafia" && <MafiaGame />}
             {playType === "spy" && <SpyGame />}
             {playType === "trivia" && (

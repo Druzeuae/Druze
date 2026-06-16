@@ -261,6 +261,8 @@ export interface CommunityEvent {
 export type GameType =
   | "mafia"
   | "spy"
+  | "tarneeb"
+  | "chess"
   | "trivia"
   | "would_you_rather"
   | "never_have_i_ever"
