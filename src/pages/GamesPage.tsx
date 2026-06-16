@@ -22,6 +22,8 @@ import { RealtimeTrivia } from "@/components/games/RealtimeTrivia";
 import { WouldYouRatherGame } from "@/components/games/WouldYouRatherGame";
 import { NeverHaveIEverGame } from "@/components/games/NeverHaveIEverGame";
 import { TwoTruthsGame } from "@/components/games/TwoTruthsGame";
+import { MafiaGame } from "@/components/games/MafiaGame";
+import { SpyGame } from "@/components/games/SpyGame";
 
 export default function GamesPage() {
   const { t, i18n } = useTranslation();
@@ -29,18 +31,24 @@ export default function GamesPage() {
   const { currentUser, profiles, gameRooms, joinGameRoom, leaveGameRoom, createGameRoom } = useApp();
 
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
+  const [quickGame, setQuickGame] = useState<GameType | null>(null);
   const [createOpen, setCreateOpen] = useState(false);
 
   const activeRoom = gameRooms.find((r) => r.id === activeRoomId) ?? null;
+  const playType: GameType | null = activeRoom?.gameType ?? quickGame;
 
   /* ----------------------- In-room play view ----------------------- */
-  if (activeRoom) {
-    const meta = GAMES.find((g) => g.id === activeRoom.gameType)!;
+  if (playType) {
+    const meta = GAMES.find((g) => g.id === playType)!;
     const Icon = meta.icon;
+    const title = activeRoom
+      ? (isAr && activeRoom.nameAr ? activeRoom.nameAr : activeRoom.name)
+      : t(`games.types.${playType}.name`);
+    const exit = () => { setActiveRoomId(null); setQuickGame(null); };
     return (
       <div className="mx-auto max-w-2xl">
         <button
-          onClick={() => setActiveRoomId(null)}
+          onClick={exit}
           className="mb-4 flex items-center gap-1.5 text-sm font-semibold text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4 rtl:rotate-180" /> {t("games.backToLobby")}
@@ -52,26 +60,28 @@ export default function GamesPage() {
               <Icon className="h-6 w-6" />
             </div>
             <div className="min-w-0 flex-1">
-              <h2 className="truncate text-lg font-bold">
-                {isAr && activeRoom.nameAr ? activeRoom.nameAr : activeRoom.name}
-              </h2>
-              <p className="text-sm opacity-90">{t(`games.types.${activeRoom.gameType}.name`)}</p>
+              <h2 className="truncate text-lg font-bold">{title}</h2>
+              <p className="text-sm opacity-90">{t(`games.types.${playType}.name`)}</p>
             </div>
-            <span className="flex items-center gap-1 text-sm font-semibold">
-              <Users className="h-4 w-4" /> {activeRoom.playerIds.length}
-            </span>
+            {activeRoom && (
+              <span className="flex items-center gap-1 text-sm font-semibold">
+                <Users className="h-4 w-4" /> {activeRoom.playerIds.length}
+              </span>
+            )}
           </div>
 
           <CardContent className="p-5 sm:p-6">
-            {activeRoom.gameType === "trivia" && (
+            {playType === "mafia" && <MafiaGame />}
+            {playType === "spy" && <SpyGame />}
+            {playType === "trivia" && (
               <RealtimeTrivia
-                roomId={activeRoom.id}
+                roomId={activeRoom?.id ?? `quick-trivia-${currentUser.id}`}
                 self={{ playerId: currentUser.id, name: currentUser.displayName, avatar: currentUser.photos[0] }}
               />
             )}
-            {activeRoom.gameType === "would_you_rather" && <WouldYouRatherGame />}
-            {activeRoom.gameType === "never_have_i_ever" && <NeverHaveIEverGame />}
-            {activeRoom.gameType === "two_truths" && <TwoTruthsGame />}
+            {playType === "would_you_rather" && <WouldYouRatherGame />}
+            {playType === "never_have_i_ever" && <NeverHaveIEverGame />}
+            {playType === "two_truths" && <TwoTruthsGame />}
           </CardContent>
         </Card>
 
@@ -103,7 +113,7 @@ export default function GamesPage() {
           return (
             <button
               key={g.id}
-              onClick={() => createGameRoom(t(`games.types.${g.id}.name`), g.id)}
+              onClick={() => setQuickGame(g.id)}
               className="group flex flex-col items-center gap-2 rounded-2xl border border-border p-4 text-center transition-all hover:-translate-y-0.5 hover:shadow-md"
             >
               <div className={cn("flex h-12 w-12 items-center justify-center rounded-xl text-white", g.gradient)}>

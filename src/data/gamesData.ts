@@ -1,4 +1,12 @@
-import { Brain, Scale, Sparkles, UserSearch, type LucideIcon } from "lucide-react";
+import {
+  Brain,
+  Drama,
+  Eye,
+  Scale,
+  Sparkles,
+  UserSearch,
+  type LucideIcon,
+} from "lucide-react";
 import type { GameType } from "@/types/app";
 
 /* ----------------------------- Game catalog ----------------------------- */
@@ -8,16 +16,98 @@ export interface GameMeta {
   icon: LucideIcon;
   /** tailwind gradient utility class for the card header */
   gradient: string;
-  badgeVariant: "intent" | "teal" | "coral" | "gold";
+  badgeVariant: "intent" | "teal" | "coral" | "gold" | "destructive" | "secondary";
   minPlayers: number;
+  /** true for on-device "pass the phone" games (vs live/online). */
+  passAndPlay?: boolean;
 }
 
 export const GAMES: GameMeta[] = [
+  { id: "mafia", icon: Drama, gradient: "gradient-crimson", badgeVariant: "destructive", minPlayers: 5, passAndPlay: true },
+  { id: "spy", icon: Eye, gradient: "gradient-indigo", badgeVariant: "intent", minPlayers: 3, passAndPlay: true },
   { id: "trivia", icon: Brain, gradient: "gradient-brand", badgeVariant: "intent", minPlayers: 1 },
   { id: "would_you_rather", icon: Scale, gradient: "gradient-teal", badgeVariant: "teal", minPlayers: 2 },
   { id: "never_have_i_ever", icon: Sparkles, gradient: "gradient-coral", badgeVariant: "coral", minPlayers: 2 },
   { id: "two_truths", icon: UserSearch, gradient: "gradient-gold", badgeVariant: "gold", minPlayers: 2 },
 ];
+
+/* ------------------------------- Mafia --------------------------------- */
+
+export type MafiaRoleId = "mafia" | "detective" | "doctor" | "civilian";
+
+export interface MafiaRole {
+  id: MafiaRoleId;
+  team: "mafia" | "town";
+  /** lucide icon name resolved in the component */
+  emoji: string;
+  gradient: string;
+}
+
+export const MAFIA_ROLES: Record<MafiaRoleId, MafiaRole> = {
+  mafia: { id: "mafia", team: "mafia", emoji: "🔪", gradient: "gradient-crimson" },
+  detective: { id: "detective", team: "town", emoji: "🔍", gradient: "gradient-indigo" },
+  doctor: { id: "doctor", team: "town", emoji: "🩺", gradient: "gradient-emerald" },
+  civilian: { id: "civilian", team: "town", emoji: "👤", gradient: "gradient-sky" },
+};
+
+/** Build a shuffled role list for a given player count. */
+export function rolesForCount(n: number): MafiaRoleId[] {
+  const mafiaCount = n <= 6 ? 1 : n <= 9 ? 2 : n <= 12 ? 3 : 4;
+  const roles: MafiaRoleId[] = [];
+  for (let i = 0; i < mafiaCount; i++) roles.push("mafia");
+  roles.push("detective");
+  if (n >= 6) roles.push("doctor");
+  while (roles.length < n) roles.push("civilian");
+  // Fisher-Yates
+  for (let i = roles.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [roles[i], roles[j]] = [roles[j], roles[i]];
+  }
+  return roles;
+}
+
+/** Narrator phase script keys (resolved via i18n mafia.script.*). */
+export const MAFIA_SCRIPT = ["nightFall", "mafiaWake", "detectiveWake", "doctorWake", "dayBreak", "vote"] as const;
+
+/* ----------------------------- Who's the Spy --------------------------- */
+
+export interface SpyWord {
+  word: string;
+  wordAr: string;
+}
+
+export const SPY_WORDS: SpyWord[] = [
+  { word: "Beach", wordAr: "الشاطئ" },
+  { word: "Airport", wordAr: "المطار" },
+  { word: "Wedding", wordAr: "حفل زفاف" },
+  { word: "Hospital", wordAr: "المستشفى" },
+  { word: "School", wordAr: "المدرسة" },
+  { word: "Restaurant", wordAr: "مطعم" },
+  { word: "Football match", wordAr: "مباراة كرة قدم" },
+  { word: "Mountain village", wordAr: "قرية جبلية" },
+  { word: "Coffee shop", wordAr: "مقهى" },
+  { word: "Desert safari", wordAr: "رحلة صحراوية" },
+  { word: "Shopping mall", wordAr: "مركز تسوق" },
+  { word: "Gym", wordAr: "النادي الرياضي" },
+  { word: "Library", wordAr: "المكتبة" },
+  { word: "Hotel", wordAr: "فندق" },
+  { word: "Farm", wordAr: "مزرعة" },
+  { word: "Cinema", wordAr: "السينما" },
+  { word: "Matte gathering", wordAr: "جلسة متة" },
+  { word: "Boat trip", wordAr: "رحلة بحرية" },
+  { word: "Souq market", wordAr: "السوق" },
+  { word: "Snowy mountain", wordAr: "جبل مثلج" },
+  { word: "Birthday party", wordAr: "حفلة عيد ميلاد" },
+  { word: "Police station", wordAr: "مركز الشرطة" },
+  { word: "Bank", wordAr: "البنك" },
+  { word: "Theme park", wordAr: "مدينة ملاهي" },
+];
+
+export function pickSpyRound(playerCount: number) {
+  const word = SPY_WORDS[Math.floor(Math.random() * SPY_WORDS.length)];
+  const spyIndex = Math.floor(Math.random() * playerCount);
+  return { word, spyIndex };
+}
 
 /* ------------------------------- Trivia -------------------------------- */
 

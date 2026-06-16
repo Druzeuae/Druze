@@ -122,6 +122,7 @@
   .gradient-amber2 { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 100%); }
   .gradient-orange { background: linear-gradient(135deg, #F97316 0%, #FB923C 100%); }
   .gradient-pink   { background: linear-gradient(135deg, #EC4899 0%, #F472B6 100%); }
+  .gradient-crimson{ background: linear-gradient(135deg, #7F1D1D 0%, #DC2626 100%); }
 
   /* Gentle idle float for nav tiles */
   @keyframes nav-float {

@@ -450,6 +450,8 @@
     "roomNamePlaceholder": "e.g. Friday Night Fun",
     "chooseGame": "Choose a game",
     "types": {
+      "mafia": { "name": "Mafia", "desc": "Social deduction — find the mafia before they win" },
+      "spy": { "name": "Who's the Spy?", "desc": "Everyone knows the word — except the spy" },
       "trivia": { "name": "Trivia Challenge", "desc": "Test your knowledge across fun categories" },
       "would_you_rather": { "name": "Would You Rather", "desc": "Pick a side and see how the group splits" },
       "never_have_i_ever": { "name": "Never Have I Ever", "desc": "Reveal who's done what — great icebreaker" },
@@ -505,6 +507,64 @@
       "truth": "Truth",
       "newRound": "New round"
     }
+  },
+  "mafia": {
+    "title": "Mafia",
+    "tagline": "Trust no one. Find the mafia before they take over.",
+    "howTo": "The phone deals everyone a secret role, then guides the night & day rounds. Gather around one screen and pass it for the secret reveal.",
+    "players": "players",
+    "deal": "Deal secret roles",
+    "passTo": "Pass the phone to Player {{n}}",
+    "playerN": "Player {{n}}",
+    "tapReveal": "Tap to reveal your role",
+    "gotItPass": "Got it — pass on",
+    "startGame": "Start the game",
+    "secretNote": "Don't let anyone see your role!",
+    "narrator": "Narrator",
+    "newGame": "New game",
+    "aliveTracker": "Players",
+    "aliveCount": "{{count}} alive",
+    "tapEliminate": "Tap a player to mark them eliminated.",
+    "team": { "mafia": "Mafia", "town": "Town" },
+    "roles": {
+      "mafia": { "name": "Mafia", "desc": "Each night, secretly choose someone to eliminate." },
+      "detective": { "name": "Detective", "desc": "Each night, investigate one player's allegiance." },
+      "doctor": { "name": "Doctor", "desc": "Each night, choose one player to protect." },
+      "civilian": { "name": "Civilian", "desc": "Use discussion & votes to root out the mafia." }
+    },
+    "script": {
+      "nightFall": "🌙 Night falls — everyone, close your eyes.",
+      "mafiaWake": "🔪 Mafia, wake up and silently choose your target.",
+      "detectiveWake": "🔍 Detective, wake up and point to someone to investigate.",
+      "doctorWake": "🩺 Doctor, wake up and choose someone to save.",
+      "dayBreak": "☀️ Day breaks — announce who was lost, then discuss.",
+      "vote": "🗳️ Town, vote on who you think is the mafia."
+    }
+  },
+  "spy": {
+    "title": "Who's the Spy?",
+    "tagline": "Everyone shares a secret word — but one of you is the spy.",
+    "howTo": "Everyone secretly sees the same word, except one random spy. Take turns describing it without saying it — then vote out the spy!",
+    "players": "players",
+    "start": "Start round",
+    "passTo": "Pass the phone to Player {{n}}",
+    "playerN": "Player {{n}}",
+    "tapReveal": "Tap to reveal",
+    "secretWord": "The secret word is",
+    "wordHint": "Describe it without saying it!",
+    "youAreSpy": "You're the SPY",
+    "spyHint": "Blend in — figure out the word from others.",
+    "gotItPass": "Got it — pass on",
+    "everyoneSeen": "Everyone's seen it — start!",
+    "secretNote": "Keep your screen hidden from others!",
+    "discussTitle": "Discuss!",
+    "discussBody": "Take turns dropping a clue about the word. Then decide together who the spy is.",
+    "revealSpy": "Reveal the spy",
+    "newRound": "New round",
+    "spyWas": "The spy was Player {{n}}!",
+    "wordWas": "The word was: {{word}}",
+    "playAgain": "Play again (same players)",
+    "changePlayers": "Change players"
   },
   "chat": {
     "title": "Chat",

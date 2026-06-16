@@ -463,6 +463,24 @@ export const MOCK_ACTIVITIES: AppActivity[] = [
 
 export const MOCK_GAME_ROOMS: AppGameRoom[] = [
   {
+    id: "room-mafia",
+    name: "Mafia Night 🔪",
+    nameAr: "ليلة المافيا 🔪",
+    gameType: "mafia",
+    hostId: "u-3",
+    playerIds: ["u-3", "u-4", "u-6", "u-7"],
+    createdAt: "2026-06-15T20:00:00Z",
+  },
+  {
+    id: "room-spy",
+    name: "Who's the Spy? 🕵️",
+    nameAr: "من الجاسوس؟ 🕵️",
+    gameType: "spy",
+    hostId: "u-5",
+    playerIds: ["u-5", "u-2"],
+    createdAt: "2026-06-15T19:30:00Z",
+  },
+  {
     id: "room-1",
     name: "Friday Night Trivia",
     nameAr: "تحدي معلومات ليلة الجمعة",
