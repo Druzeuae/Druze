@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Star, Bookmark, CalendarPlus, MapPin } from "lucide-react";
+import { Star, Bookmark, CalendarPlus, MapPin, Heart } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,14 @@ import type { AppProfile } from "@/types/app";
 interface Props {
   profile: AppProfile;
   sharedInterests: number;
+  compatibility?: number | null;
   isSaved: boolean;
   isAppreciated: boolean;
   onAppreciate: () => void;
   onSave: () => void;
 }
 
-export function ProfileCard({ profile, sharedInterests, isSaved, isAppreciated, onAppreciate, onSave }: Props) {
+export function ProfileCard({ profile, sharedInterests, compatibility, isSaved, isAppreciated, onAppreciate, onSave }: Props) {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const isAr = i18n.language === "ar";
@@ -57,6 +58,12 @@ export function ProfileCard({ profile, sharedInterests, isSaved, isAppreciated, 
           <Badge variant="gold" className="absolute start-2 top-2">
             ⭐ {t("common.premium")}
           </Badge>
+        )}
+        {typeof compatibility === "number" && (
+          <div className="absolute end-2 top-2 flex items-center gap-1 rounded-full gradient-brand px-2.5 py-1 text-xs font-extrabold text-white shadow-lg">
+            <Heart className="h-3.5 w-3.5 fill-current" />
+            {t("compatibility.percent", { percent: compatibility })}
+          </div>
         )}
       </div>
 

@@ -57,6 +57,8 @@ export interface AppProfile {
   contributionPoints?: number;
   /** Ancestral village / hometown. */
   village?: string;
+  /** Values & compatibility quiz answers (questionId -> optionValue). */
+  quizAnswers?: Record<string, string>;
 }
 
 export interface AppAppreciation {

@@ -20,6 +20,7 @@ import {
   MEMBER_VILLAGE,
   VILLAGES,
 } from "@/data/communityData";
+import { QUIZ_ANSWERS_BY_ID } from "@/data/quizData";
 
 import type {
   AppActivity,
@@ -48,6 +49,7 @@ function enrichProfile(p: AppProfile): AppProfile {
     ...p,
     contributionPoints: p.contributionPoints ?? MEMBER_POINTS[p.id],
     village: p.village ?? MEMBER_VILLAGE[p.id],
+    quizAnswers: p.quizAnswers ?? QUIZ_ANSWERS_BY_ID[p.id],
   };
 }
 
@@ -125,6 +127,7 @@ interface AppContextValue extends PersistedState {
   leaveMatteCircle: (circleId: string) => void;
   joinEvent: (eventId: string) => void;
   leaveEvent: (eventId: string) => void;
+  saveQuizAnswers: (answers: Record<string, string>) => void;
   /** True when browsing without an account. */
   isGuest: boolean;
   registerPromptOpen: boolean;
@@ -817,6 +820,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       ),
     }));
 
+  const saveQuizAnswers = (answers: Record<string, string>) => {
+    if (!requireAuth()) return;
+    setState((s) => {
+      const updated = { ...s.currentUser, quizAnswers: { ...(s.currentUser.quizAnswers ?? {}), ...answers } };
+      return {
+        ...s,
+        currentUser: updated,
+        profiles: s.profiles.map((p) => (p.id === updated.id ? updated : p)),
+      };
+    });
+  };
+
   /* ---------------- VALUE ---------------- */
 
   const value = useMemo<AppContextValue>(
@@ -862,6 +877,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       leaveMatteCircle,
       joinEvent,
       leaveEvent,
+      saveQuizAnswers,
       isGuest: !state.isAuthenticated,
       registerPromptOpen,
       promptRegister,

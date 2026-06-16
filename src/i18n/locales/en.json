@@ -214,9 +214,34 @@
     "Cultural": "Cultural",
     "Druze Heritage": "Druze Heritage"
   },
+  "compatibility": {
+    "percent": "{{percent}}% match",
+    "ctaTitle": "Discover your most meaningful matches",
+    "ctaBody": "Take the 2-minute values quiz to reveal your compatibility.",
+    "tiers": {
+      "soulmate": "Soulmate match",
+      "great": "Great match",
+      "good": "Good match",
+      "potential": "Potential match"
+    }
+  },
+  "quiz": {
+    "title": "Values & Compatibility",
+    "privacyNote": "Your answers stay private and are only used to find you better matches.",
+    "doneTitle": "All set — beautifully done 🤍",
+    "doneBody": "We've personalized your matches based on what matters most to you.",
+    "seeMatches": "See my matches",
+    "categories": {
+      "faith": "Faith & tradition",
+      "family": "Family",
+      "lifestyle": "Lifestyle",
+      "future": "The future",
+      "values": "Values"
+    }
+  },
   "discovery": {
     "title": "Discover",
-    "subtitle": "Find meaningful connections in the community",
+    "subtitle": "Meet marriage-minded singles, friends & allies — with intention.",
     "filters": "Filters",
     "filterLocation": "City / Location",
     "filterIntent": "Connection Intent",

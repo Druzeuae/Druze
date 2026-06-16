@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Lock, SlidersHorizontal, Sparkles } from "lucide-react";
+import { HeartHandshake, Lock, SlidersHorizontal, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ProfileCard } from "@/components/discovery/ProfileCard";
@@ -8,6 +9,7 @@ import { FilterPanel } from "@/components/discovery/FilterPanel";
 import { useApp, sharedInterestCount } from "@/context/AppContext";
 import { useToast } from "@/hooks/use-toast";
 import { calculateAge, cn } from "@/lib/utils";
+import { computeCompatibility, hasCompletedQuiz } from "@/lib/compatibility";
 import type { DiscoveryFilters } from "@/types/app";
 
 const DEFAULT_FILTERS: DiscoveryFilters = {
@@ -24,6 +26,7 @@ const DAILY_FREE_LIMIT = 10;
 
 export default function DiscoverPage() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { toast } = useToast();
   const {
     currentUser,
@@ -43,6 +46,7 @@ export default function DiscoverPage() {
   const [filterOpen, setFilterOpen] = useState(false);
 
   const blockedIds = new Set(blocks.map((b) => b.blockedId));
+  const quizDone = hasCompletedQuiz(currentUser);
 
   const filteredProfiles = useMemo(() => {
     return profiles.filter((p) => {
@@ -113,6 +117,23 @@ export default function DiscoverPage() {
         </Button>
       </div>
 
+      {/* Compatibility quiz CTA */}
+      {!quizDone && (
+        <button
+          onClick={() => navigate("/quiz")}
+          className="mb-5 flex w-full items-center gap-4 overflow-hidden rounded-2xl gradient-brand p-4 text-start text-white shadow-lg transition-transform hover:-translate-y-0.5"
+        >
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/20">
+            <HeartHandshake className="h-6 w-6" />
+          </div>
+          <div className="flex-1">
+            <p className="font-extrabold">{t("compatibility.ctaTitle")}</p>
+            <p className="text-sm text-white/85">{t("compatibility.ctaBody")}</p>
+          </div>
+          <Sparkles className="h-5 w-5 shrink-0" />
+        </button>
+      )}
+
       {filteredProfiles.length === 0 ? (
         <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-border py-20 text-center text-muted-foreground">
           <p className="text-lg font-semibold">{t("discovery.noResults")}</p>
@@ -131,6 +152,7 @@ export default function DiscoverPage() {
                 key={profile.id}
                 profile={profile}
                 sharedInterests={sharedInterestCount(currentUser, profile)}
+                compatibility={quizDone ? computeCompatibility(currentUser, profile) : null}
                 isSaved={savedUserIds.includes(profile.id)}
                 isAppreciated={appreciations.some((a) => a.fromUserId === currentUser.id && a.toUserId === profile.id)}
                 onAppreciate={() => handleAppreciate(profile.id)}

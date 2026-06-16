@@ -12,6 +12,7 @@ import DiscoverPage from "@/pages/DiscoverPage";
 import ActivitiesPage from "@/pages/ActivitiesPage";
 import GamesPage from "@/pages/GamesPage";
 import EventsPage from "@/pages/EventsPage";
+import QuizPage from "@/pages/QuizPage";
 import CommunityHubPage from "@/pages/CommunityHubPage";
 import MajlisPage from "@/pages/MajlisPage";
 import MomentsPage from "@/pages/MomentsPage";
@@ -82,6 +83,7 @@ function AppRoutes() {
         <Route path="/activities" element={<ActivitiesPage />} />
         <Route path="/games" element={<GamesPage />} />
         <Route path="/events" element={<EventsPage />} />
+        <Route path="/quiz" element={<QuizPage />} />
         <Route path="/community" element={<CommunityHubPage />} />
         <Route path="/community/majlis" element={<MajlisPage />} />
         <Route path="/community/moments" element={<MomentsPage />} />
